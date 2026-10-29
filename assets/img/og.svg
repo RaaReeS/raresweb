@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <radialGradient id="orb1" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#6366F1" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#6366F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0A0A0F"/>
+
+  <!-- rejilla de puntos -->
+  <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+    <circle cx="1.5" cy="1.5" r="1.2" fill="#ffffff" opacity="0.05"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- orbes -->
+  <circle cx="150" cy="90" r="330" fill="url(#orb1)"/>
+  <circle cx="1080" cy="560" r="300" fill="url(#orb2)"/>
+
+  <!-- prompt -->
+  <text x="90" y="170" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace"
+        font-size="26" fill="#4ADE80">$ whoami →</text>
+
+  <!-- nombre -->
+  <text x="90" y="300" font-family="'Space Grotesk', system-ui, sans-serif"
+        font-size="96" font-weight="700" fill="#F1F1F6" letter-spacing="-2">Rares</text>
+  <text x="90" y="400" font-family="'Space Grotesk', system-ui, sans-serif"
+        font-size="96" font-weight="700" fill="url(#acc)" letter-spacing="-2">Stanescu</text>
+
+  <!-- rol -->
+  <text x="90" y="470" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace"
+        font-size="30" fill="#A5B4FC">Desarrollador Web Full Stack Junior</text>
+
+  <!-- estado -->
+  <text x="90" y="530" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace"
+        font-size="26" fill="#4ADE80">cat status.txt → Disponible para prácticas / primer empleo ✔</text>
+
+  <!-- url -->
+  <text x="1080" y="575" text-anchor="end" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace"
+        font-size="22" fill="#787892">raresweb.com</text>
+</svg>

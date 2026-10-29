@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark" data-preloader="loading">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- SEO -->
+  <title>Rares Stanescu · Desarrollador Web Junior — Portfolio</title>
+  <meta name="description" content="Portfolio de Rares Stanescu, desarrollador web junior (2º DAW, CPIFP Los Enlaces, Zaragoza). Frontend, backend y bases de datos. Buscando prácticas (FCT) o primer empleo." />
+  <meta name="author" content="Rares Stanescu" />
+  <meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f7f7fb" media="(prefers-color-scheme: light)" />
+  <meta name="color-scheme" content="dark light" />
+  <link rel="canonical" href="https://raresweb.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://raresweb.com/" />
+  <meta property="og:title" content="Rares Stanescu · Desarrollador Web Junior" />
+  <meta property="og:description" content="Frontend, backend y bases de datos. Disponible para prácticas (FCT) o primer empleo junior. Zaragoza, España." />
+  <meta property="og:image" content="https://raresweb.com/assets/img/og.svg" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:locale:alternate" content="en_GB" />
+  <meta property="og:site_name" content="Rares Stanescu — Portfolio" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rares Stanescu · Desarrollador Web Junior" />
+  <meta name="twitter:description" content="Frontend, backend y bases de datos. Disponible para prácticas (FCT) o primer empleo junior. Zaragoza, España." />
+  <meta name="twitter:image" content="https://raresweb.com/assets/img/og.svg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+
+  <!-- JSON-LD · Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Rares Stanescu",
+    "url": "https://raresweb.com/",
+    "email": "mailto:rares.stanescu00@gmail.com",
+    "jobTitle": "Desarrollador Web Junior",
+    "address": { "@type": "PostalAddress", "addressLocality": "Zaragoza", "addressCountry": "ES" },
+    "alumniOf": [
+      { "@type": "EducationalOrganization", "name": "CPIFP Los Enlaces" },
+      { "@type": "EducationalOrganization", "name": "IES Martina Bescós" }
+    ],
+    "knowsLanguage": ["es", "ro", "en", "fr"],
+    "knowsAbout": ["Java", "Python", "PHP", "JavaScript", "HTML5", "CSS3", "SQL", "MySQL", "Linux", "Git", "Docker"],
+    "sameAs": [
+      "https://github.com/RaaReeS",
+      "https://www.linkedin.com/in/raarees/"
+    ]
+  }
+  </script>
+
+  <!-- Fuentes: preconnect + swap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Prevenir FOUC de tema y saltar el preloader si ya se vio esta sesión -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('portfolio_theme');
+        var sysLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        document.documentElement.dataset.theme = t || (sysLight ? 'light' : 'dark');
+        if (sessionStorage.getItem('portfolio_preloader') === '1') {
+          document.documentElement.dataset.preloader = 'seen';
+        }
+      } catch (e) { /* navegación privada: dejamos el tema oscuro por defecto */ }
+
+      /* ── Redes de seguridad del preloader ─────────────────────────
+         Si los módulos ES no llegan a arrancar (file://, MIME de .js
+         incorrecto, CDN bloqueada…), la web no debe quedar bloqueada
+         bajo el overlay: se libera sola y se explica el motivo. */
+      var released = false;
+      function release() {
+        if (released) return;
+        released = true;
+        var el = document.querySelector('.preloader');
+        if (el) {
+          el.classList.add('is-done');
+          try { document.documentElement.dataset.preloader = 'seen'; } catch (e2) {}
+          window.setTimeout(function () { if (el.parentNode) el.remove(); }, 500);
+        }
+      }
+      window.addEventListener('error', function () {
+        if (!released) console.warn('[portfolio] un recurso falló al cargar — el preloader se liberará solo');
+      });
+      window.setTimeout(release, 2800);
+      window.addEventListener('load', function () { window.setTimeout(release, 1800); });
+
+      /* file:// bloquea los módulos por CORS: aviso visible */
+      if (window.location.protocol === 'file:') {
+        console.error(
+          '%c[portfolio] Estás abriendo index.html con file:// — los módulos ES no cargan así.',
+          'color:#f87171;font-weight:bold'
+        );
+        console.error('%c[portfolio] Sirve la carpeta: npx serve .   (o Live Server en VS Code).', 'color:#fbbf24');
+        var step = document.querySelector('.preloader__step[data-step]');
+        if (step) {
+          step.textContent = '⚠ file:// — sirve la web con npx serve .';
+          step.style.color = '#f87171';
+        }
+        window.setTimeout(release, 3500);
+      }
+    })();
+  </script>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <noscript>
+    <style>
+      /* Sin JS: se ve todo estático, sin preloader ni elementos dependientes */
+      .preloader { display: none; }
+      .term__body::after { content: '⚡ JavaScript desactivado — contenido completo disponible más abajo'; }
+    </style>
+  </noscript>
+
+  <!-- Librerías CDN (versiones fijadas, defer) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+
+  <!-- Punto de entrada (ES module: defer implícito, tras los CDN) -->
+  <script type="module" src="js/main.js"></script>
+</head>
+
+<body>
+  <!-- =====================================================
+       SPRITE DE ICONOS (SVG inline, una sola definición)
+       ===================================================== -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="sr-only" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 16 16">
+      <path fill="currentColor" stroke="none" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+    </symbol>
+    <symbol id="i-linkedin" viewBox="0 0 16 16">
+      <path fill="currentColor" stroke="none" d="M15.997 15.999v-5.597c0-1.693-.035-3.874-2.36-3.874-2.365 0-2.727 1.846-2.727 3.75v5.72H8V7h2.842v1.253h.041c.396-.75 1.362-1.541 2.804-1.541 2.999 0 3.552 1.974 3.552 4.542v3.744h-.002zM5.103 5.897a1.733 1.733 0 1 1 0-3.466 1.733 1.733 0 0 1 0 3.466zM6.753 16H3.45V7h3.303v9z"/>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24">
+      <rect x="2" y="4" width="20" height="16" rx="2"/>
+      <path d="m22 7-10 6L2 7"/>
+    </symbol>
+    <symbol id="i-download" viewBox="0 0 24 24">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </symbol>
+    <symbol id="i-external" viewBox="0 0 24 24">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+      <polyline points="15 3 21 3 21 9"/>
+      <line x1="10" y1="14" x2="21" y2="3"/>
+    </symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <polyline points="19 12 12 19 5 12"/>
+    </symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24">
+      <line x1="12" y1="19" x2="12" y2="5"/>
+      <polyline points="5 12 12 5 19 12"/>
+    </symbol>
+    <symbol id="i-x" viewBox="0 0 24 24">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <polyline points="20 6 9 17 4 12"/>
+    </symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24">
+      <rect x="9" y="9" width="13" height="13" rx="2"/>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </symbol>
+    <symbol id="i-command" viewBox="0 0 24 24">
+      <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0 3-3"/>
+    </symbol>
+    <symbol id="i-code" viewBox="0 0 24 24">
+      <polyline points="16 18 22 12 16 6"/>
+      <polyline points="8 6 2 12 8 18"/>
+    </symbol>
+    <symbol id="i-braces" viewBox="0 0 24 24">
+      <path d="M8 3H7a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2 2 2 0 0 1 2 2v4c0 1.1.9 2 2 2h1"/>
+      <path d="M16 3h1a2 2 0 0 1 2 2v4c0 1.1.9 2 2 2a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-1"/>
+    </symbol>
+    <symbol id="i-file-text" viewBox="0 0 24 24">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/>
+      <line x1="16" y1="17" x2="8" y2="17"/>
+    </symbol>
+    <symbol id="i-database" viewBox="0 0 24 24">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/>
+      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+    </symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24">
+      <polyline points="4 17 10 11 4 5"/>
+      <line x1="12" y1="19" x2="20" y2="19"/>
+    </symbol>
+    <symbol id="i-server" viewBox="0 0 24 24">
+      <rect x="2" y="2" width="20" height="8" rx="2"/>
+      <rect x="2" y="14" width="20" height="8" rx="2"/>
+      <line x1="6" y1="6" x2="6.01" y2="6"/>
+      <line x1="6" y1="18" x2="6.01" y2="18"/>
+    </symbol>
+    <symbol id="i-share" viewBox="0 0 24 24">
+      <circle cx="18" cy="5" r="3"/>
+      <circle cx="6" cy="12" r="3"/>
+      <circle cx="18" cy="19" r="3"/>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+    </symbol>
+    <symbol id="i-box" viewBox="0 0 24 24">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+      <line x1="12" y1="22.08" x2="12" y2="12"/>
+    </symbol>
+    <symbol id="i-git-branch" viewBox="0 0 24 24">
+      <line x1="6" y1="3" x2="6" y2="15"/>
+      <circle cx="18" cy="6" r="3"/>
+      <circle cx="6" cy="18" r="3"/>
+      <path d="M18 9a9 9 0 0 1-9 9"/>
+    </symbol>
+    <symbol id="i-windows" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="8" height="8" rx="1"/>
+      <rect x="13" y="3" width="8" height="8" rx="1"/>
+      <rect x="3" y="13" width="8" height="8" rx="1"/>
+      <rect x="13" y="13" width="8" height="8" rx="1"/>
+    </symbol>
+    <symbol id="i-docker" viewBox="0 0 24 24">
+      <rect x="3" y="10" width="4" height="4" rx="0.5"/>
+      <rect x="8" y="10" width="4" height="4" rx="0.5"/>
+      <rect x="13" y="10" width="4" height="4" rx="0.5"/>
+      <rect x="8" y="5" width="4" height="4" rx="0.5"/>
+      <path d="M2 17c3 3 7 3 10 3s7 0 10-3"/>
+    </symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24">
+      <rect x="5" y="5" width="14" height="14" rx="2"/>
+      <rect x="9" y="9" width="6" height="6"/>
+      <line x1="9" y1="1" x2="9" y2="4"/>
+      <line x1="15" y1="1" x2="15" y2="4"/>
+      <line x1="9" y1="20" x2="9" y2="23"/>
+      <line x1="15" y1="20" x2="15" y2="23"/>
+      <line x1="20" y1="9" x2="23" y2="9"/>
+      <line x1="20" y1="14" x2="23" y2="14"/>
+      <line x1="1" y1="9" x2="4" y2="9"/>
+      <line x1="1" y1="14" x2="4" y2="14"/>
+    </symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24">
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+    </symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/>
+      <line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/>
+      <line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </symbol>
+    <symbol id="i-star" viewBox="0 0 24 24">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+    <symbol id="i-send" viewBox="0 0 24 24">
+      <line x1="22" y1="2" x2="11" y2="13"/>
+      <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+    </symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24">
+      <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+      <polyline points="2 17 12 22 22 17"/>
+      <polyline points="2 12 12 17 22 12"/>
+    </symbol>
+  </svg>
+
+  <!-- =====================================================
+       PRELOADER · "compilando portfolio"
+       ===================================================== -->
+  <div class="preloader" role="status" aria-live="polite">
+    <div class="preloader__box">
+      <div class="preloader__line">
+        <span class="preloader__step" data-step="1">resolving modules…</span>
+        <span class="preloader__pct" data-pct>0%</span>
+      </div>
+      <div class="preloader__track"><div class="preloader__fill" data-fill></div></div>
+    </div>
+  </div>
+
+  <!-- Cursor personalizado: punto fluido (escritorio, sin reduced-motion) -->
+  <div class="cursor-dotc" aria-hidden="true"></div>
+
+  <!-- Enlace "saltar al contenido" -->
+  <a class="skip-link" href="#sobre-mi" data-i18n="a11y.skip">Saltar al contenido</a>
+
+  <!-- =====================================================
+       NAVEGACIÓN
+       ===================================================== -->
+  <header class="nav" data-nav>
+    <div class="container nav__bar">
+      <a class="nav__logo" href="#inicio" data-scroll aria-label="rares stanescu — inicio">
+        rs.<span class="nav__logo-caret" aria-hidden="true"></span>
+      </a>
+
+      <nav class="nav__links" data-nav-links id="nav-links" aria-label="Navegación principal">
+        <a class="nav__link" href="#sobre-mi" data-scroll data-i18n="nav.about">Sobre mí</a>
+        <a class="nav__link" href="#stack" data-scroll data-i18n="nav.skills">Stack</a>
+        <a class="nav__link" href="#proyectos" data-scroll data-i18n="nav.projects">Proyectos</a>
+        <a class="nav__link" href="#formacion" data-scroll data-i18n="nav.education">Formación</a>
+        <a class="nav__link" href="#idiomas" data-scroll data-i18n="nav.languages">Idiomas</a>
+        <a class="nav__link" href="#contacto" data-scroll data-i18n="nav.contact">Contacto</a>
+
+        <!-- Atajos visibles solo en el panel del menú móvil -->
+        <div class="nav__socials">
+          <a class="icon-btn" href="https://github.com/RaaReeS" target="_blank" rel="noopener noreferrer"
+             data-i18n-attr="aria-label:a11y.gh" aria-label="GitHub (abre en una pestaña nueva)">
+            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+          </a>
+          <a class="icon-btn" href="https://www.linkedin.com/in/raarees/" target="_blank" rel="noopener noreferrer"
+             data-i18n-attr="aria-label:a11y.li" aria-label="LinkedIn (abre en una pestaña nueva)">
+            <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+          </a>
+        </div>
+      </nav>
+
+      <div class="nav__actions">
+        <!-- Estado disponible: elipsis visible arriba también -->
+        <span class="status-pill mono" aria-hidden="true">
+          <span class="status-dot"></span>
+          <span data-i18n="hero.statusShort">abierto · FCT</span>
+        </span>
+
+        <!-- Selector de idioma ES / EN -->
+        <div class="lang-switch" role="group" data-i18n-attr="aria-label:a11y.lang" aria-label="Cambiar el idioma de la web">
+          <button class="lang-switch__btn" type="button" data-lang-btn="es" aria-pressed="true">ES</button>
+          <button class="lang-switch__btn" type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+        </div>
+
+        <!-- Cambiar tema -->
+        <button class="icon-btn" type="button" data-theme-toggle data-i18n-attr="aria-label:a11y.theme" aria-label="Cambiar entre tema oscuro y claro">
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+
+        <!-- Paleta de comandos (botón visible + atajo Ctrl/Cmd K) -->
+        <button class="palette-btn" type="button" data-palette-open data-i18n-attr="aria-label:a11y.palette" aria-label="Abrir la paleta de comandos (Ctrl K)">
+          <svg class="icon" aria-hidden="true"><use href="#i-command"/></svg>
+          <kbd data-palette-kbd aria-hidden="true">Ctrl K</kbd>
+        </button>
+
+        <!-- Hamburguesa (móvil) -->
+        <button class="nav__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="nav-links"
+                data-i18n-attr="aria-label:a11y.menuOpen" aria-label="Abrir el menú de navegación">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ==================================================
+         HERO · terminal + identidad
+         ================================================== -->
+    <section class="hero" id="inicio" data-hero>
+      <canvas class="hero__canvas" data-hero-canvas aria-hidden="true"></canvas>
+      <div class="hero__orb hero__orb--1" aria-hidden="true"></div>
+      <div class="hero__orb hero__orb--2" aria-hidden="true"></div>
+
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="hero__eyebrow mono" data-i18n="hero.eyebrow">~/portfolio · zaragoza, es</p>
+
+          <p class="hero__status">
+            <span class="status-pill" data-i18n-attr="aria-label:hero.status" aria-label="Disponible para prácticas / primer empleo">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span data-i18n="hero.status">Disponible para prácticas / primer empleo</span>
+            </span>
+          </p>
+
+          <h1 class="hero__name" data-hero-name>
+            <span data-name-part>Rares</span>
+            <span class="u-accent" data-name-part>Stanescu</span>
+          </h1>
+
+          <p class="hero__headline" data-i18n-html="hero.headline">
+            Frontend · Backend · Bases de datos —<br><span class="u-accent">aprendizaje rápido</span> y trabajo en equipo.
+          </p>
+
+          <p class="hero__lead" data-i18n="hero.lead">
+            Estudiante de 2º de Desarrollo de Aplicaciones Web, apasionado por la tecnología con conocimientos de desarrollo Frontend y Backend.
+          </p>
+
+          <div class="hero__ctas">
+            <a class="btn btn--solid" href="#proyectos" data-scroll data-magnetic>
+              <svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg>
+              <span data-i18n="hero.ctaProjects">Ver proyectos</span>
+            </a>
+            <a class="btn btn--ghost" href="#contacto" data-scroll data-magnetic>
+              <svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>
+              <span data-i18n="hero.ctaContact">Contactar</span>
+            </a>
+          </div>
+
+          <div class="hero__socials">
+            <span class="mono" data-i18n="hero.socialLabel">encuéntrame →</span>
+            <a class="icon-btn" href="https://github.com/RaaReeS" target="_blank" rel="noopener noreferrer"
+               data-i18n-attr="aria-label:a11y.gh" aria-label="GitHub (abre en una pestaña nueva)">
+              <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            </a>
+            <a class="icon-btn" href="https://www.linkedin.com/in/raarees/" target="_blank" rel="noopener noreferrer"
+               data-i18n-attr="aria-label:a11y.li" aria-label="LinkedIn (abre en una pestaña nueva)">
+              <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Ventana de terminal: la rellena terminal.js -->
+        <div class="window term" data-terminal role="img" data-i18n-attr="aria-label:hero.terminalOpen" aria-label="ventana de terminal: presentación en modo texto">
+          <div class="window__bar">
+            <div class="window__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span class="window__title" data-i18n="term.window">rares@portfolio: ~</span>
+          </div>
+          <div class="term__body" data-term-body aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="hero__scroll mono" aria-hidden="true">
+        <span data-i18n="hero.scroll">desliza</span>
+        <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         01 · SOBRE MÍ · editor de código con pestañas
+         ================================================== -->
+    <section class="section section--alt" id="sobre-mi" data-section>
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">01</span>
+          <h2 class="section__title" data-i18n="about.title">Sobre mí</h2>
+          <p class="section__lead" data-i18n="about.lead">Mi perfil en su formato natural: código fuente.</p>
+        </header>
+
+        <div class="about__grid">
+          <!-- Ventana editor con pestañas (behavior en terminal.js: initEditorTabs) -->
+          <div class="window editor" data-editor>
+            <div class="window__bar">
+              <div class="window__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+              <span class="window__title" data-i18n="about.window">rares-web — editor de perfil</span>
+            </div>
+
+            <div class="editor__tabs" role="tablist" data-i18n-attr="aria-label:about.ariaTabs" aria-label="Pestañas del editor de perfil">
+              <button class="tab" id="tab-aboutjs" type="button" role="tab" aria-selected="true" aria-controls="panel-aboutjs" tabindex="0">
+                <svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>
+                <span>about.js</span><span class="tab__dot" aria-hidden="true"></span>
+              </button>
+              <button class="tab" id="tab-skillsjson" type="button" role="tab" aria-selected="false" aria-controls="panel-skillsjson" tabindex="-1">
+                <svg class="icon" aria-hidden="true"><use href="#i-braces"/></svg>
+                <span>skills.json</span><span class="tab__dot" aria-hidden="true"></span>
+              </button>
+              <button class="tab" id="tab-contactmd" type="button" role="tab" aria-selected="false" aria-controls="panel-contactmd" tabindex="-1">
+                <svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg>
+                <span>contact.md</span><span class="tab__dot" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <div class="editor__panels">
+              <!-- about.js -->
+              <div class="editor__panel" id="panel-aboutjs" role="tabpanel" aria-labelledby="tab-aboutjs" tabindex="0">
+                <div class="code-line"><span class="tok--cm" data-i18n="about.cm1">// Perfil rápido: datos básicos y estado actual</span></div>
+                <div class="code-line"><span><span class="tok--kw">const</span> <span class="tok--fn">developer</span> <span class="tok--op">=</span> <span class="tok--op">{</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">name</span><span class="tok--op">:</span> <span class="tok--str">'<span data-i18n="about.jName">Rares Stanescu</span>'</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">role</span><span class="tok--op">:</span> <span class="tok--str">'<span data-i18n="about.jRole">Desarrollador Web Junior</span>'</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">location</span><span class="tok--op">:</span> <span class="tok--str">'<span data-i18n="about.jLocation">Zaragoza, España</span>'</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">education</span><span class="tok--op">:</span> <span class="tok--str">'<span data-i18n="about.jEdu">2º DAW · CPIFP Los Enlaces</span>'</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">languages</span><span class="tok--op">:</span> <span class="tok--op">[</span><span class="tok--str">'<span data-i18n="about.l1">español</span>'</span><span class="tok--op">,</span> <span class="tok--str">'<span data-i18n="about.l2">rumano</span>'</span><span class="tok--op">,</span> <span class="tok--str">'<span data-i18n="about.l3">inglés</span>'</span><span class="tok--op">,</span> <span class="tok--str">'<span data-i18n="about.l4">francés</span>'</span><span class="tok--op">]</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">lookingFor</span><span class="tok--op">:</span> <span class="tok--str">'<span data-i18n="about.jLooking">Prácticas (FCT) o primer empleo junior</span>'</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span><span class="tok--op">};</span></span></div>
+                <div class="code-line"><span>&nbsp;</span></div>
+                <div class="code-line"><span class="tok--cm" data-i18n="about.cm2">// descompongo problemas, aprendo rápido, trabajo en equipo</span></div>
+                <div class="code-line"><span><span class="tok--kw">export default</span> <span class="tok--fn">developer</span><span class="tok--op">;</span></span></div>
+              </div>
+
+              <!-- skills.json -->
+              <div class="editor__panel" id="panel-skillsjson" role="tabpanel" aria-labelledby="tab-skillsjson" tabindex="0" hidden>
+                <div class="code-line"><span><span class="tok--op">{</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">"frontend"</span><span class="tok--op">:</span> <span class="tok--op">[</span><span class="tok--str">"HTML5"</span><span class="tok--op">,</span> <span class="tok--str">"CSS3"</span><span class="tok--op">,</span> <span class="tok--str">"JavaScript"</span><span class="tok--op">]</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">"backend"</span><span class="tok--op">:</span> <span class="tok--op">[</span><span class="tok--str">"Java"</span><span class="tok--op">,</span> <span class="tok--str">"Python"</span><span class="tok--op">,</span> <span class="tok--str">"PHP"</span><span class="tok--op">,</span> <span class="tok--str">"XML (XSD)"</span><span class="tok--op">]</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">"data"</span><span class="tok--op">:</span> <span class="tok--op">[</span><span class="tok--str">"SQL"</span><span class="tok--op">,</span> <span class="tok--str">"MySQL"</span><span class="tok--op">]</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">"systems"</span><span class="tok--op">:</span> <span class="tok--op">[</span><span class="tok--str">"Linux (Debian, Ubuntu)"</span><span class="tok--op">,</span> <span class="tok--str">"Windows"</span><span class="tok--op">,</span> <span class="tok--str">"Windows Server"</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>             <span class="tok--str">"TCP/IP"</span><span class="tok--op">,</span> <span class="tok--str">"VirtualBox"</span><span class="tok--op">]</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">"devops"</span><span class="tok--op">:</span> <span class="tok--op">[</span><span class="tok--str">"Git"</span><span class="tok--op">,</span> <span class="tok--str">"GitHub"</span><span class="tok--op">,</span> <span class="tok--str">"Docker"</span><span class="tok--op">]</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>  <span class="tok--prop">"soft"</span><span class="tok--op">:</span> <span class="tok--op">[</span><span class="tok--str">"<span data-i18n="skills.p1">lógica de programación</span>"</span><span class="tok--op">,</span> <span class="tok--str">"<span data-i18n="skills.p2">resolución de problemas</span>"</span><span class="tok--op">,</span></span></div>
+                <div class="code-line"><span>          <span class="tok--str">"<span data-i18n="skills.p3">aprendizaje rápido</span>"</span><span class="tok--op">,</span> <span class="tok--str">"<span data-i18n="skills.p4">trabajo en equipo</span>"</span><span class="tok--op">]</span></span></div>
+                <div class="code-line"><span><span class="tok--op">}</span></span></div>
+              </div>
+
+              <!-- contact.md -->
+              <div class="editor__panel" id="panel-contactmd" role="tabpanel" aria-labelledby="tab-contactmd" tabindex="0" hidden>
+                <div class="code-line"><span><span class="tok--h"># contact.md</span></span></div>
+                <div class="code-line"><span>&nbsp;</span></div>
+                <div class="code-line"><span><span class="tok--bullet">•</span> <span class="tok--txt" data-i18n="about.mdOpen">- estado: abierto a prácticas (FCT) o primer empleo</span></span></div>
+                <div class="code-line"><span><span class="tok--bullet">•</span> <span class="tok--txt" data-i18n="about.mdLoc">- ubicación: Zaragoza, España</span></span></div>
+                <div class="code-line"><span><span class="tok--bullet">•</span> <span class="tok--txt" data-i18n="about.mdLang">- idiomas: español · rumano · inglés · francés</span></span></div>
+                <div class="code-line"><span><span class="tok--bullet">•</span> <span class="tok--txt" data-i18n="about.mdDrive">- permiso de conducir B + vehículo propio</span></span></div>
+                <div class="code-line"><span>&nbsp;</span></div>
+                <div class="code-line"><span>  <span class="tok--link">rares.stanescu00<wbr>@gmail.com</span></span></div>
+                <div class="code-line"><span>  <span class="tok--link">github.com/RaaReeS</span> · <span class="tok--link">linkedin.com/in/raarees</span></span></div>
+                <div class="code-line"><span>&nbsp;</span></div>
+                <div class="code-line"><span class="tok--cm" data-i18n="about.mdFoot"># estilo de respuesta: async, sin bloquear 😄</span></div>
+              </div>
+            </div>
+
+            <div class="editor__status mono">
+              <span class="u-accent">● connected</span>
+              <span>utf-8 · lf</span>
+              <span>~3 pestañas</span>
+              <span aria-hidden="true">▍</span>
+            </div>
+          </div>
+
+          <!-- Chips de datos rápidos -->
+          <div class="about__chips" data-about-chips>
+            <span class="chip" data-i18n="about.chip1">status: abierto · FCT / junior</span>
+            <span class="chip" data-i18n="about.chip2">sys: zaragoza, es</span>
+            <span class="chip" data-i18n="about.chip3">locale: es · ro · en · fr</span>
+            <span class="chip" data-i18n="about.chip4">drive: permiso B + vehículo propio</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         02 · STACK TÉCNICO · tarjetas por categoría
+         ================================================== -->
+    <section class="section" id="stack" data-section>
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">02</span>
+          <h2 class="section__title" data-i18n="skills.title">Stack técnico</h2>
+          <p class="section__lead" data-i18n="skills.lead">Lo que uso en clase y en proyectos, agrupado por terreno.</p>
+        </header>
+
+        <div class="skills__grid" data-skills-grid>
+          <!-- Lenguajes -->
+          <article class="glass skill-card" data-skills-card>
+            <div class="skill-card__head">
+              <h3 class="skill-card__title" data-i18n="skills.catLang">Lenguajes</h3>
+              <span class="skill-card__count" data-count="7" data-i18n-attr="aria-label:skills.countAria|{n}=7" aria-label="7 tecnologías">07</span>
+            </div>
+            <ul class="skill-card__list">
+              <li class="pill"><span class="mono u-accent" aria-hidden="true">Jv</span>Java</li>
+              <li class="pill"><span class="mono u-accent" aria-hidden="true">Py</span>Python</li>
+              <li class="pill"><span class="mono u-accent" aria-hidden="true">PHP</span>PHP</li>
+              <li class="pill"><span class="mono u-accent" aria-hidden="true">JS</span>JavaScript</li>
+              <li class="pill"><span class="mono u-accent" aria-hidden="true">&lt;/&gt;</span>HTML5</li>
+              <li class="pill"><span class="mono u-accent" aria-hidden="true">#</span>CSS3</li>
+              <li class="pill"><span class="mono u-accent" aria-hidden="true">XML</span>XML (XSD)</li>
+            </ul>
+          </article>
+
+          <!-- Bases de datos -->
+          <article class="glass skill-card" data-skills-card>
+            <div class="skill-card__head">
+              <h3 class="skill-card__title" data-i18n="skills.catDb">Bases de datos</h3>
+              <span class="skill-card__count" data-count="2" data-i18n-attr="aria-label:skills.countAria|{n}=2" aria-label="2 tecnologías">02</span>
+            </div>
+            <ul class="skill-card__list">
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-database"/></svg>SQL</li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-database"/></svg>MySQL</li>
+            </ul>
+          </article>
+
+          <!-- Sistemas y redes -->
+          <article class="glass skill-card" data-skills-card>
+            <div class="skill-card__head">
+              <h3 class="skill-card__title" data-i18n="skills.catSys">Sistemas y redes</h3>
+              <span class="skill-card__count" data-count="5" data-i18n-attr="aria-label:skills.countAria|{n}=5" aria-label="5 tecnologías">05</span>
+            </div>
+            <ul class="skill-card__list">
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-terminal"/></svg>Linux · Debian / Ubuntu</li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-windows"/></svg>Windows</li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>Windows Server</li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-share"/></svg>TCP/IP</li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-box"/></svg>VirtualBox</li>
+            </ul>
+          </article>
+
+          <!-- Herramientas / DevOps -->
+          <article class="glass skill-card" data-skills-card>
+            <div class="skill-card__head">
+              <h3 class="skill-card__title" data-i18n="skills.catTools">Herramientas / DevOps</h3>
+              <span class="skill-card__count" data-count="3" data-i18n-attr="aria-label:skills.countAria|{n}=3" aria-label="3 tecnologías">03</span>
+            </div>
+            <ul class="skill-card__list">
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-git-branch"/></svg>Git</li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-docker"/></svg>Docker</li>
+            </ul>
+          </article>
+
+          <!-- Personales -->
+          <article class="glass skill-card is-soft" data-skills-card>
+            <div class="skill-card__head">
+              <h3 class="skill-card__title" data-i18n="skills.catSoft">Personales</h3>
+              <span class="skill-card__count">04</span>
+            </div>
+            <ul class="skill-card__list">
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-cpu"/></svg><span data-i18n="skills.p1">lógica de programación</span></li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-wrench"/></svg><span data-i18n="skills.p2">resolución de problemas</span></li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-zap"/></svg><span data-i18n="skills.p3">aprendizaje rápido</span></li>
+              <li class="pill"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg><span data-i18n="skills.p4">trabajo en equipo</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         03 · PROYECTOS · tarjetas + modal + repos GitHub
+         ================================================== -->
+    <section class="section section--alt" id="proyectos" data-section>
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">03</span>
+          <h2 class="section__title" data-i18n="projects.title">Proyectos</h2>
+          <p class="section__lead" data-i18n="projects.lead">Selección de lo que he construido — cada tarjeta abre un detalle.</p>
+        </header>
+
+        <!-- Las tarjetas las pinta projects.js desde data/projects.js -->
+        <div class="projects__grid" data-projects-grid></div>
+
+        <!-- Repositorios en vivo desde la API de GitHub -->
+        <div class="gh__head">
+          <h3 class="gh__title">
+            <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+            <span data-i18n="gh.title">Repositorios públicos</span>
+            <span class="gh__live mono" aria-hidden="true">live</span>
+          </h3>
+          <p class="mono gh__count" data-gh-count hidden aria-live="polite"></p>
+        </div>
+
+        <div class="gh__grid" data-gh-grid aria-live="polite">
+          <!-- Skeleton de carga (se sustituye por tarjetas reales) -->
+          <div class="glass repo-card repo-card--skeleton"><span></span><span></span><span></span></div>
+          <div class="glass repo-card repo-card--skeleton"><span></span><span></span><span></span></div>
+          <div class="glass repo-card repo-card--skeleton"><span></span><span></span><span></span></div>
+        </div>
+
+        <p class="gh__note" data-gh-note role="status">
+          <svg class="icon" aria-hidden="true"><use href="#i-zap"/></svg>
+          <span data-gh-note-text></span>
+          <button type="button" data-gh-retry hidden data-i18n="gh.retry">Reintentar</button>
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         04 · FORMACIÓN · git log (trayecto académico)
+         ================================================== -->
+    <section class="section" id="formacion" data-section>
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">04</span>
+          <h2 class="section__title" data-i18n="timeline.titleEdu">Formación</h2>
+          <p class="section__lead" data-i18n-html="timeline.leadEdu">Mi trayecto académico, en formato <code>git log</code>.</p>
+        </header>
+
+        <ol class="timeline" data-timeline>
+          <li class="tl-item">
+            <article class="glass tl-card">
+              <div class="tl-card__meta">
+                <span class="tl-badge tl-badge--feat" data-i18n="timeline.badgeFeat">feat</span>
+                <span class="tl-hash">c3a8f21</span>
+              </div>
+              <p class="tl-card__msg" data-i18n="timeline.t1">feat: matriculado en Desarrollo de Aplicaciones Web — CPIFP Los Enlaces, Zaragoza</p>
+              <p class="tl-card__date"><time datetime="2025" data-i18n="timeline.d1">2025 — presente</time></p>
+            </article>
+          </li>
+          <li class="tl-item">
+            <article class="glass tl-card">
+              <div class="tl-card__meta">
+                <span class="tl-badge" data-i18n="timeline.badgeEdu">edu</span>
+                <span class="tl-hash">b7d4e09</span>
+              </div>
+              <p class="tl-card__msg" data-i18n="timeline.t2">edu: Bachillerato Científico-Tecnológico — IES Martina Bescós</p>
+              <p class="tl-card__date"><time datetime="2023" data-i18n="timeline.d2">2023 — 2025</time></p>
+            </article>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         05 · CERTIFICACIONES · git log (los extras)
+         ================================================== -->
+    <section class="section section--alt" id="certificaciones" data-section>
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">05</span>
+          <h2 class="section__title" data-i18n="timeline.titleCert">Certificaciones</h2>
+          <p class="section__lead" data-i18n-html="timeline.leadCert">Certificaciones y cursos extra, también en formato <code>git log</code>.</p>
+        </header>
+
+        <ol class="timeline" data-timeline>
+          <li class="tl-item">
+            <article class="glass tl-card">
+              <div class="tl-card__meta">
+                <span class="tl-badge tl-badge--cert" data-i18n="timeline.badgeCert">cert</span>
+                <span class="tl-hash">a1f6c33</span>
+              </div>
+              <p class="tl-card__msg" data-i18n="timeline.t3">cert: Programación de bases de datos con SQL — Oracle Academy</p>
+              <p class="tl-card__date"><time datetime="2026" data-i18n="timeline.d3">2026</time></p>
+            </article>
+          </li>
+          <li class="tl-item">
+            <article class="glass tl-card">
+              <div class="tl-card__meta">
+                <span class="tl-badge tl-badge--cert" data-i18n="timeline.badgeCert">cert</span>
+                <span class="tl-hash">d2e9b44</span>
+              </div>
+              <p class="tl-card__msg" data-i18n="timeline.t4">cert: Fundamentos de Java — Oracle Academy</p>
+              <p class="tl-card__date"><time datetime="2026" data-i18n="timeline.d3">2026</time></p>
+            </article>
+          </li>
+          <li class="tl-item">
+            <article class="glass tl-card">
+              <div class="tl-card__meta">
+                <span class="tl-badge tl-badge--cert" data-i18n="timeline.badgeCert">cert</span>
+                <span class="tl-hash">e5b1a55</span>
+              </div>
+              <p class="tl-card__msg" data-i18n="timeline.t5">cert: Conceptos básicos de redes — Cisco Networking Academy</p>
+              <p class="tl-card__date"><time datetime="2026" data-i18n="timeline.d3">2026</time></p>
+            </article>
+          </li>
+          <li class="tl-item">
+            <article class="glass tl-card">
+              <div class="tl-card__meta">
+                <span class="tl-badge tl-badge--cert" data-i18n="timeline.badgeCert">cert</span>
+                <span class="tl-hash">c9d2e66</span>
+              </div>
+              <p class="tl-card__msg" data-i18n="timeline.t6">cert: curso de Python — Udemy</p>
+              <p class="tl-card__date"><time datetime="2024" data-i18n="timeline.d6">2024</time></p>
+            </article>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         05 · IDIOMAS · barras de nivel animadas
+         ================================================== -->
+    <section class="section" id="idiomas" data-section>
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">06</span>
+          <h2 class="section__title" data-i18n="langs.title">Idiomas</h2>
+          <p class="section__lead" data-i18n="langs.lead">Perfil multilingüe: cuatro lenguas, cero contexto perdido.</p>
+        </header>
+
+        <div class="langs__grid" data-langs-grid>
+          <div class="lang-row" style="--level: 100%">
+            <div class="lang-row__top">
+              <span class="lang-row__name" data-i18n="langs.l1">Español</span>
+              <span class="lang-row__level mono" data-i18n="langs.lv1">nativo</span>
+            </div>
+            <div class="lang-row__bar" role="img" data-i18n-attr="aria-label:langs.aria1" aria-label="Nivel de español: C2">
+              <span class="lang-row__fill" data-bar-fill></span>
+            </div>
+          </div>
+          <div class="lang-row" style="--level: 100%">
+            <div class="lang-row__top">
+              <span class="lang-row__name" data-i18n="langs.l2">Rumano</span>
+              <span class="lang-row__level mono" data-i18n="langs.lv2">nativo</span>
+            </div>
+            <div class="lang-row__bar" role="img" data-i18n-attr="aria-label:langs.aria2" aria-label="Nivel de rumano: C2">
+              <span class="lang-row__fill" data-bar-fill></span>
+            </div>
+          </div>
+          <div class="lang-row" style="--level: 75%">
+            <div class="lang-row__top">
+              <span class="lang-row__name" data-i18n="langs.l3">Inglés</span>
+              <span class="lang-row__level mono" data-i18n="langs.lv3">B2 — avanzado</span>
+            </div>
+            <div class="lang-row__bar" role="img" data-i18n-attr="aria-label:langs.aria3" aria-label="Nivel de inglés: B2">
+              <span class="lang-row__fill" data-bar-fill></span>
+            </div>
+          </div>
+          <div class="lang-row" style="--level: 55%">
+            <div class="lang-row__top">
+              <span class="lang-row__name" data-i18n="langs.l4">Francés</span>
+              <span class="lang-row__level mono" data-i18n="langs.lv4">B1 — intermedio</span>
+            </div>
+            <div class="lang-row__bar" role="img" data-i18n-attr="aria-label:langs.aria4" aria-label="Nivel de francés: B1">
+              <span class="lang-row__fill" data-bar-fill></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         06 · CONTACTO · canales + formulario terminal
+         ================================================== -->
+    <section class="section section--alt" id="contacto" data-section>
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">07</span>
+          <h2 class="section__title" data-i18n="contact.title">Contacto</h2>
+          <p class="section__lead" data-i18n-html="contact.lead">Cada mensaje es un <code>pull request</code> a mi bandeja de entrada.</p>
+        </header>
+
+        <div class="contact__grid">
+          <!-- Canales directos -->
+          <aside class="glass contact__panel" data-contact-panel>
+            <p class="contact__panel-title mono" data-i18n="contact.infoTitle">// canales directos</p>
+
+            <a class="link-row" href="mailto:rares.stanescu00@gmail.com"
+               data-i18n-attr="aria-label:a11y.mail" aria-label="Enviar un email a Rares Stanescu">
+              <svg class="icon link-row__icon" aria-hidden="true"><use href="#i-mail"/></svg>
+              <span class="link-row__meta">
+                <span class="link-row__label mono" data-i18n="contact.emailLabel">email</span>
+                <span class="link-row__value">rares.stanescu00@gmail.com</span>
+              </span>
+              <button class="link-row__copy" type="button" data-copy-email data-i18n-attr="aria-label:a11y.copy" aria-label="Copiar la dirección de email">
+                <svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>
+              </button>
+            </a>
+
+            <a class="link-row" href="https://github.com/RaaReeS" target="_blank" rel="noopener noreferrer"
+               data-i18n-attr="aria-label:a11y.gh" aria-label="GitHub de Rares Stanescu (abre en una pestaña nueva)">
+              <svg class="icon link-row__icon" aria-hidden="true"><use href="#i-github"/></svg>
+              <span class="link-row__meta">
+                <span class="link-row__label mono" data-i18n="contact.ghLabel">github</span>
+                <span class="link-row__value">github.com/RaaReeS</span>
+              </span>
+              <svg class="icon" style="margin-inline-start:auto;color:var(--faint);width:15px;height:15px" aria-hidden="true"><use href="#i-external"/></svg>
+            </a>
+
+            <a class="link-row" href="https://www.linkedin.com/in/raarees/" target="_blank" rel="noopener noreferrer"
+               data-i18n-attr="aria-label:a11y.li" aria-label="LinkedIn de Rares Stanescu (abre en una pestaña nueva)">
+              <svg class="icon link-row__icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+              <span class="link-row__meta">
+                <span class="link-row__label mono" data-i18n="contact.liLabel">linkedin</span>
+                <span class="link-row__value">linkedin.com/in/raarees</span>
+              </span>
+              <svg class="icon" style="margin-inline-start:auto;color:var(--faint);width:15px;height:15px" aria-hidden="true"><use href="#i-external"/></svg>
+            </a>
+
+            <div class="link-row">
+              <svg class="icon link-row__icon" aria-hidden="true"><use href="#i-zap"/></svg>
+              <span class="link-row__meta">
+                <span class="link-row__label mono" data-i18n="contact.openToLabel">open to</span>
+                <span class="link-row__value" data-i18n="contact.openToValue">prácticas (FCT) · primer empleo junior</span>
+              </span>
+            </div>
+
+            <div class="link-row">
+              <svg class="icon link-row__icon" aria-hidden="true"><use href="#i-terminal"/></svg>
+              <span class="link-row__meta">
+                <span class="link-row__label mono" data-i18n="contact.locLabel">ubicación</span>
+                <span class="link-row__value" data-i18n="contact.locValue">Zaragoza, España</span>
+              </span>
+            </div>
+
+            <!-- Descarga de CV (coloca assets/cv.pdf; ver README) -->
+            <a class="btn btn--ghost btn--mono" href="assets/cv.pdf" download data-cv-link>
+              <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+              <span data-i18n="contact.cv">Descargar CV (PDF)</span>
+            </a>
+          </aside>
+
+          <!-- Formulario tipo terminal (envía con Resend vía /api/contact) -->
+          <div class="window form" data-form-window>
+            <div class="form__promptbar">
+              <span class="form__prompt-user mono">rares@portfolio</span>
+              <span class="form__prompt-path mono">~</span>
+              <span class="mono" data-i18n="contact.prompt">$ contact --new</span>
+            </div>
+
+            <form class="form__body" novalidate data-contact-form>
+              <!-- Honeypot anti-spam -->
+              <p class="honeypot" aria-hidden="true">
+                <label for="hp">No rellenar</label>
+                <input type="text" id="hp" name="_gotcha" tabindex="-1" autocomplete="off" />
+              </p>
+
+              <div class="field">
+                <div class="field__row">
+                  <span class="field__label" id="label-name" data-i18n="contact.fLabelName">name</span>
+                  <input class="field__input" type="text" id="field-name" name="name" autocomplete="name" required
+                         placeholder="Tu nombre" data-i18n-attr="placeholder:contact.phName" aria-labelledby="label-name" aria-describedby="msg-name" />
+                </div>
+                <p class="field__msg" id="msg-name" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <div class="field__row">
+                  <span class="field__label" id="label-email" data-i18n="contact.fLabelEmail">email</span>
+                  <input class="field__input" type="email" id="field-email" name="email" autocomplete="email" required
+                         placeholder="tu@email.com" data-i18n-attr="placeholder:contact.phEmail" aria-labelledby="label-email" aria-describedby="msg-email" />
+                </div>
+                <p class="field__msg" id="msg-email" aria-live="polite"></p>
+              </div>
+
+              <div class="field field--area">
+                <div class="field__row">
+                  <span class="field__label" id="label-message" data-i18n="contact.fLabelMessage">message</span>
+                  <textarea class="field__input field__textarea" id="field-message" name="message" rows="5" required
+                            placeholder="Hola Rares, abramos un issue… (mín. 10 caracteres)" data-i18n-attr="placeholder:contact.phMessage"
+                            aria-labelledby="label-message" aria-describedby="msg-message"></textarea>
+                </div>
+                <p class="field__msg" id="msg-message" aria-live="polite"></p>
+              </div>
+
+              <div class="form__note form__note--ok" data-form-note role="status" aria-live="polite"></div>
+              <div class="form__note form__note--err" data-form-note-err role="alert"></div>
+              <div class="form__note form__note--info" data-form-note-info role="status" aria-live="polite"></div>
+
+              <div class="form__foot">
+                <button class="form__btn" type="submit" data-form-submit>
+                  <span class="form__spinner" hidden data-form-spinner></span>
+                  <svg class="icon" aria-hidden="true" data-form-icon><use href="#i-send"/></svg>
+                  <span data-form-btn-text data-i18n="contact.btn">./send.sh — Enviar mensaje</span>
+                </button>
+                <span class="form__hint mono">https · resend · <span data-i18n="contact.secure">envío seguro</span></span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a class="nav__logo" href="#inicio" data-scroll>rs.<span class="nav__logo-caret" aria-hidden="true"></span></a>
+          <p class="footer__due" data-i18n="footer.made">Hecho a mano con HTML, CSS y JavaScript — sin frameworks, sin build.</p>
+        </div>
+
+        <nav aria-labelledby="foot-nav" data-footer-nav>
+          <p class="footer__col-title" id="foot-nav" data-i18n="footer.colNav">mapa del sitio</p>
+          <div class="footer__list">
+            <a href="#sobre-mi" data-scroll class="link-line" data-i18n="nav.about">Sobre mí</a>
+            <a href="#stack" data-scroll class="link-line" data-i18n="nav.skills">Stack</a>
+            <a href="#proyectos" data-scroll class="link-line" data-i18n="nav.projects">Proyectos</a>
+            <a href="#formacion" data-scroll class="link-line" data-i18n="nav.education">Formación</a>
+            <a href="#contacto" data-scroll class="link-line" data-i18n="nav.contact">Contacto</a>
+          </div>
+        </nav>
+
+        <div>
+          <p class="footer__col-title" data-i18n="footer.colSocial">redes</p>
+          <div class="footer__list">
+            <a href="https://github.com/RaaReeS" target="_blank" rel="noopener noreferrer" class="link-line" data-i18n-attr="aria-label:a11y.gh" aria-label="GitHub de Rares Stanescu">GitHub</a>
+            <a href="https://www.linkedin.com/in/raarees/" target="_blank" rel="noopener noreferrer" class="link-line" data-i18n-attr="aria-label:a11y.li" aria-label="LinkedIn de Rares Stanescu">LinkedIn</a>
+            <a href="mailto:rares.stanescu00@gmail.com" class="link-line" data-i18n-attr="aria-label:a11y.mail" aria-label="Enviar un email a Rares Stanescu">Email</a>
+            <a href="assets/cv.pdf" download class="link-line" data-i18n="contact.cvShort" aria-label="Descargar CV en PDF">CV · PDF</a>
+          </div>
+        </div>
+
+        <div>
+          <p class="footer__col-title" data-i18n="footer.colStack">stack</p>
+          <p class="footer__stack" data-i18n="footer.stackLine">html5 · css3 · js vanilla · gsap</p>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__rights" data-i18n="footer.rights">© 2026 Rares Stanescu · Zaragoza, España</p>
+        <a class="to-top" href="#inicio" data-scroll>
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+          <span data-i18n="footer.toTop">inicio</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================
+       MODAL DE PROYECTO (rellenado por projects.js)
+       ===================================================== -->
+  <dialog class="p-modal" id="project-modal" aria-labelledby="pmodal-title" data-project-modal>
+    <div class="p-modal__media" data-pmodal-media>
+      <button class="icon-btn p-modal__close" type="button" autofocus data-pmodal-close
+              data-i18n-attr="aria-label:a11y.projectClose" aria-label="Cerrar los detalles del proyecto">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+      <span class="p-card__monogram" data-pmodal-monogram aria-hidden="true">PT</span>
+    </div>
+    <div class="p-modal__body">
+      <h3 class="p-modal__title" id="pmodal-title" data-pmodal-title>—</h3>
+      <p class="p-modal__long" data-pmodal-long>—</p>
+      <ul class="p-modal__list">
+        <li class="p-modal__item" style="display:none" data-pmodal-item-template>
+          <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+          <span data-pmodal-item-text></span>
+        </li>
+      </ul>
+      <ul class="tags" data-pmodal-tags></ul>
+      <div class="p-modal__actions">
+        <a class="btn btn--solid btn--sm" data-pmodal-repo target="_blank" rel="noopener noreferrer" data-pmodal-repo-label>
+          <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+          <span data-i18n="projects.modalCode">Ver código</span>
+        </a>
+        <a class="btn btn--ghost btn--sm" data-pmodal-demo target="_blank" rel="noopener noreferrer" data-pmodal-demo-label hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>
+          <span data-i18n="projects.modalDemo">Ver demo</span>
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- =====================================================
+       PALETA DE COMANDOS (Ctrl/Cmd + K)
+       ===================================================== -->
+  <div class="palette" data-palette hidden>
+    <div class="palette__backdrop" data-palette-backdrop></div>
+    <div class="palette__panel" role="dialog" aria-modal="true" data-i18n-attr="aria-label:palette.title" aria-label="Paleta de comandos">
+      <div class="palette__inputrow">
+        <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+        <input class="palette__input" type="text" data-palette-input spellcheck="false" autocomplete="off" aria-controls="palette-list" />
+        <span class="palette__esc"><kbd>esc</kbd></span>
+      </div>
+      <div class="palette__list" id="palette-list" role="listbox" data-palette-list></div>
+    </div>
+  </div>
+
+  <!-- Toasts (email copiado, easter egg…) -->
+  <div class="toast-wrap" data-toast-wrap aria-live="polite"></div>
+</body>
+</html>
+

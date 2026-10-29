@@ -1,0 +1,6 @@
+# robots.txt — raresweb.com
+User-agent: *
+Allow: /
+Disallow: /assets/cv.pdf
+
+Sitemap: https://raresweb.com/sitemap.xml

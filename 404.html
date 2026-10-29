@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>404 · Rares Stanescu</title>
+  <meta name="description" content="Página no encontrada — la ruta no existe en este repositorio." />
+  <meta name="robots" content="noindex" />
+  <link rel="canonical" href="https://raresweb.com/" />
+  <meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f7f7fb" media="(prefers-color-scheme: light)" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tema sin parpadeo (idéntico al index) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('portfolio_theme');
+        var sysLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        document.documentElement.dataset.theme = t || (sysLight ? 'light' : 'dark');
+      } catch (e) { /* offline-first: oscuro */ }
+      if (window.location.protocol === 'file:') {
+        console.error('%c[portfolio] file:// bloquea los módulos ES — sirve la web con: npx serve .', 'color:#f87171;font-weight:bold');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!-- Sprite mínimo para los iconos de esta página -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="sr-only" aria-hidden="true">
+    <symbol id="i-arrow-up" viewBox="0 0 24 24">
+      <line x1="12" y1="19" x2="12" y2="5"/>
+      <polyline points="5 12 12 5 19 12"/>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24">
+      <rect x="2" y="4" width="20" height="16" rx="2"/>
+      <path d="m22 7-10 6L2 7"/>
+    </symbol>
+  </svg>
+
+  <main style="min-height:100svh;display:grid;place-items:center;padding:var(--gutter)">
+    <div class="container" style="display:grid;gap:26px;max-width:640px">
+
+      <p class="mono" style="color:var(--faint)">git checkout raresweb.com —esas_rutas_nada</p>
+
+      <!-- Ventana terminal con el diagnóstico del error -->
+      <div class="window">
+        <div class="window__bar">
+          <div class="window__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <span class="window__title">rares@portfolio: ~/404</span>
+        </div>
+        <div class="term__body" style="min-height:0">
+          <div class="term__line">
+            <span class="t-prompt">$ </span><span class="t-cmd" data-nf-cmd>curl -I https://raresweb.com/esta-pagina</span>
+          </div>
+          <div class="term__out term__out--err" style="color:var(--red)" data-nf-out>
+            <span class="term__out-mark" style="color:var(--red)">→</span>
+            <span>HTTP/2 404 — dirección no encontrada en este repositorio</span>
+          </div>
+          <div class="term__line">
+            <span class="t-prompt">$ </span><span class="t-cmd">cd ~/home</span><span class="t-caret" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;gap:10px">
+        <h1 style="font-size:clamp(1.9rem,5vw,3rem)">
+          <span style="color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text">404</span>
+          · <span data-nf-title>página no encontrada</span>
+        </h1>
+        <p data-nf-hint style="color:var(--muted)">pista: la ruta no existe, pero el commit inicial sigue ahí.</p>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a class="btn btn--solid" href="/">
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+          <span data-nf-back>cd ~/home — volver</span>
+        </a>
+        <a class="btn btn--ghost" href="/#contacto">
+          <svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>
+          <span>contacto</span>
+        </a>
+        <button class="btn btn--ghost" type="button" data-lang-404 style="font-family:var(--font-m);font-size:.85rem">
+          ES → EN
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Interacción mínima: solo i18n de esta página -->
+  <script type="module">
+    import { initI18n, t, setLang, getLang } from './js/modules/i18n.js';
+
+    initI18n();
+
+    const paint = () => {
+      document.title = `404 · Rares Stanescu`;
+      document.querySelector('[data-nf-cmd]').textContent = t('nf.cmd');
+      document.querySelector('[data-nf-out] span:last-child').textContent = t('nf.out');
+      document.querySelector('[data-nf-title]').textContent =
+        getLang() === 'en' ? 'page not found' : 'página no encontrada';
+      document.querySelector('[data-nf-hint]').textContent = t('nf.hint');
+      document.querySelector('[data-nf-back]').textContent = t('nf.back');
+      document.querySelector('[data-lang-404]').textContent = getLang() === 'en' ? 'EN → ES' : 'ES → EN';
+    };
+
+    paint();
+    document.addEventListener('langchange', paint);
+
+    document.querySelector('[data-lang-404]').addEventListener('click', () => {
+      setLang(getLang() === 'es' ? 'en' : 'es');
+    });
+  </script>
+</body>
+</html>
