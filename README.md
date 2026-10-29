@@ -30,6 +30,27 @@ python -m http.server 3000
 
 Y abre http://localhost:3000.
 
+### 📱 Comprobar el responsive en desarrollo
+
+```bash
+npm run serve        # sirve en http://localhost:8777 (otra terminal)
+npm run check:mobile # captura las 8 secciones a 390px (iPhone 12/13)
+                     # y detecta overflow horizontal con Edge headless
+```
+
+Las capturas se guardan en `Desktop/shots/sec-*.png`. El script usa
+`playwright-core` con el Microsoft Edge ya instalado (no descarga nada).
+
+### 🖱️ Comprobar el modal de proyectos (cursor + scroll)
+
+```bash
+npm run check:modal
+```
+
+Verifica automáticamente que al abrir un proyecto: se bloquea el scroll del
+fondo (Lenis pausado), vuelve el cursor nativo sobre el modal y todo se
+reanuda al cerrar.
+
 ### 🛠️ Solución de problemas
 
 | Síntoma | Causa | Solución |

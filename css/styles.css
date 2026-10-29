@@ -813,6 +813,10 @@ html.custom-cursor summary {
   cursor: none;
 }
 
+/* NOTA: el modal de proyecto usa <dialog>.show() (NO showModal), así que
+   NO entra en el top layer del navegador y el punto custom (z-index 500)
+   sigue pintándose por encima, como en el resto de la página. */
+
 /* =========================================================
    06 · NAVEGACIÓN
    ========================================================= */
@@ -1158,6 +1162,7 @@ html.custom-cursor summary {
   font-size: var(--fs-mono);
   line-height: 1.85;
   min-height: calc(9px + 9 * 1.85em);
+  overflow-wrap: anywhere;
 }
 
 .term__line {
@@ -1180,6 +1185,16 @@ html.custom-cursor summary {
   color: var(--muted);
   margin-block: 2px 12px;
   animation: fade-up var(--t-med) var(--ease) backwards;
+}
+
+/* Las líneas nunca fuerzan el ancho del flex: el texto envuelve en
+   pantallas cortas en vez de desbordar el lateral */
+.term__out > * {
+  min-width: 0;
+}
+
+.term__out > .term__line {
+  flex: 1 1 auto;
 }
 
 .term__out-mark {
@@ -1638,38 +1653,75 @@ html.custom-cursor summary {
   z-index: 2;
 }
 
-/* Modal de proyecto */
+/* Modal de proyecto — overlay NO modal (show()):
+   el <dialog> no entra en el "top layer" del navegador y el cursor
+   personalizado (z-index 500) puede pintarse por encima. El panel
+   real vive en .p-modal__panel; el dialog hace de fondo difuminado. */
 .p-modal {
-  width: min(760px, calc(100vw - 32px));
-  margin: auto;
-  padding: 0;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: clamp(16px, 4vw, 40px);
+  border: none;
+  display: none; /* cerrado: sin backers extra */
+  background: rgba(4, 4, 8, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 220; /* por debajo del cursor (500), por encima de todo lo demás */
+}
+
+/* Abierto: rejilla centrada; el panel manda en su tamaño */
+.p-modal[open] {
+  display: grid;
+  place-items: center;
+}
+
+.p-modal__panel {
+  width: min(720px, 100%);
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--bg-2) 88%, transparent);
+  background: color-mix(in srgb, var(--bg-2) 92%, transparent);
   color: var(--text);
   box-shadow: var(--shadow), var(--glow);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  overflow-y: auto; /* solo aparece si un viewport realmente bajo lo exige */
 }
 
-.p-modal::backdrop {
-  background: rgba(4, 4, 8, 0.72);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-}
-
-.p-modal[data-open] {
+.p-modal[open] .p-modal__panel {
   animation: modal-in var(--t-slow) var(--ease);
 }
 
+/* Panel justo: suficiente para ver TODO sin scroll interno */
 .p-modal__media {
+  flex: 0 0 auto;
   position: relative;
-  height: 200px;
+  height: clamp(120px, 20vh, 180px);
   border-bottom: 1px solid var(--border);
   display: grid;
   place-items: center;
   overflow: hidden;
   isolation: isolate;
+}
+
+@media (max-width: 640px) {
+  .p-modal__panel {
+    max-height: calc(100vh - 24px);
+  }
+  .p-modal__media {
+    height: 128px;
+  }
+  .p-modal__body {
+    padding: 18px 18px 22px;
+    gap: 12px;
+  }
 }
 
 /* Solo cuando no hay captura: gradiente + trama como las tarjetas */
@@ -1699,30 +1751,33 @@ html.custom-cursor summary {
 
 .p-modal__close {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 12px;
+  right: 12px;
   z-index: 3;
   background: rgba(10, 10, 16, 0.6);
 }
 
+/* Compacto pero legible: título + descripción + bullets + tags + CTAs */
 .p-modal__body {
-  padding: 26px 28px 30px;
+  padding: 22px 26px 26px;
   display: grid;
-  gap: 16px;
+  gap: 13px;
 }
 
 .p-modal__title {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
 }
 
 .p-modal__long {
   color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.6;
 }
 
 .p-modal__list {
   display: grid;
-  gap: 9px;
-  padding: 16px 18px;
+  gap: 8px;
+  padding: 13px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
@@ -1732,7 +1787,7 @@ html.custom-cursor summary {
   display: flex;
   gap: 10px;
   font-family: var(--font-m);
-  font-size: 0.83rem;
+  font-size: 0.8rem;
   color: var(--muted);
 }
 
@@ -2787,9 +2842,16 @@ html.custom-cursor summary {
     grid-template-columns: 1fr;
   }
 
+  /* En móvil el texto va PRIMERO y la terminal después:
+     así el nombre y los CTA son visibles en la primera pantalla */
   .term {
-    order: -1;
+    order: 2;
     animation: none;
+  }
+
+  .hero {
+    padding-block: calc(var(--nav-h) + 36px) 64px;
+    min-height: auto;
   }
 
   .contact__grid {
@@ -2831,6 +2893,15 @@ html.custom-cursor summary {
   .gh__grid {
     grid-template-columns: 1fr;
   }
+  /* El editor de código gana espacio con un tamaño mono algo menor
+     (sigue teniendo scroll horizontal interno por si acaso) */
+  .editor__panel {
+    font-size: 0.7rem;
+    padding: 18px 14px 22px;
+  }
+  .code-line {
+    gap: 12px;
+  }
 }
 
 @media (max-width: 420px) {
@@ -2847,6 +2918,20 @@ html.custom-cursor summary {
   }
   .footer__top {
     grid-template-columns: 1fr;
+  }
+  /* Barra de navegación compacta: menos aire entre controles para
+     que logo + idioma + tema + comandos + menú quepan sin apriete */
+  .nav__actions {
+    gap: 6px;
+  }
+  .palette-btn {
+    height: 36px;
+    padding-inline: 10px;
+  }
+  .nav__burger,
+  .nav__theme .icon-btn {
+    width: 36px;
+    height: 36px;
   }
 }
 

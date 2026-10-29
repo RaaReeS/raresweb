@@ -15,6 +15,23 @@ const isTouch = window.matchMedia('(pointer: coarse)').matches;
 const grid = document.querySelector('[data-projects-grid]');
 const dialogEl = document.querySelector('[data-project-modal]');
 
+/**
+ * Contexto inyectado desde main.js: Lenis intercepta el wheel, así que
+ * al abrir el modal hay que PAUSARLO (si no, scrollea la página detrás
+ * del overlay aunque se ponga overflow:hidden).
+ */
+const modalCtx = {
+  stopLenis: null,
+  startLenis: null,
+};
+
+/** Elementos enfocables para el trampa de foco del panel */
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input:not([type="hidden"]), textarea, select, [tabindex]:not([tabindex="-1"])';
+
+/** Elemento que abrió el modal: para devolverle el foco al cerrar */
+let lastFocused = null;
+
 /* ---------- helpers ---------- */
 
 function escapeHTML(str) {
@@ -148,17 +165,27 @@ function openModal(project) {
   // Si el modal ya está abierto (p. ej. recarga de idioma), solo
   // se rellena de contenido; showModal() lanzaría InvalidStateError.
   if (!dialogEl.open) {
+    // Pausa el scroll suave + bloqueo nativo: nada scrollea detrás del modal
+    lastFocused = document.activeElement;
+    modalCtx.stopLenis?.();
     document.documentElement.classList.add('no-scroll');
-    if (typeof dialogEl.showModal === 'function') dialogEl.showModal();
-    else dialogEl.setAttribute('open', ''); // fallback para navegadores sin <dialog> modal
+    // show() (NO showModal): el dialog NO entra en el top layer del
+    // navegador y el cursor personalizado sigue pintándose por encima.
+    if (typeof dialogEl.show === 'function') dialogEl.show();
+    else dialogEl.setAttribute('open', '');
+    dialogEl.querySelector('[data-pmodal-close]')?.focus();
   }
 }
 
 function closeModal() {
   if (!dialogEl) return;
   document.documentElement.classList.remove('no-scroll');
+  modalCtx.startLenis?.();
   delete dialogEl.dataset.openProject;
   if (dialogEl.open) dialogEl.close();
+  // Devuelve el foco al elemento que abrió el modal (a11y)
+  lastFocused?.focus?.();
+  lastFocused = null;
 }
 
 function bindModal() {
@@ -177,12 +204,46 @@ function bindModal() {
 
   dialogEl.querySelector('[data-pmodal-close]').addEventListener('click', closeModal);
 
-  // Clic en el fondo del dialog (fuera del panel) = cerrar
+  // Clic en el fondo (fuera del panel) = cerrar
   dialogEl.addEventListener('click', (event) => {
     if (event.target === dialogEl) closeModal();
   });
 
-  dialogEl.addEventListener('close', () => document.documentElement.classList.remove('no-scroll'));
+  // Con show() el <dialog> no es modal: gestionamos Esc y el foco nosotros
+  document.addEventListener('keydown', (event) => {
+    if (!dialogEl.open) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeModal();
+      return;
+    }
+
+    // Atrapar el Tab dentro del panel (equivale al focus trap nativo)
+    if (event.key === 'Tab') {
+      const nodes = dialogEl.querySelectorAll(FOCUSABLE);
+      if (nodes.length === 0) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey) {
+        if (active === first || !dialogEl.contains(active)) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else if (active === last || !dialogEl.contains(active)) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  // Cierre por cualquier vía: reanuda Lenis y limpia el bloqueo
+  dialogEl.addEventListener('close', () => {
+    document.documentElement.classList.remove('no-scroll');
+    modalCtx.startLenis?.();
+  });
 }
 
 /* ---------- tilt 3D propio (sin librería) ---------- */
@@ -233,7 +294,9 @@ function bindSpotlight() {
 
 /* ---------- init ---------- */
 
-export function initProjects() {
+export function initProjects(ctx = {}) {
+  if (ctx.stopLenis) modalCtx.stopLenis = ctx.stopLenis;
+  if (ctx.startLenis) modalCtx.startLenis = ctx.startLenis;
   if (!grid) return;
 
   renderProjects();

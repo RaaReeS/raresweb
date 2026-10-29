@@ -1,0 +1,14 @@
+{
+  "name": "portfolio-rares-stanescu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio estático de Rares Stanescu — desarrollador web junior (HTML/CSS/JS + Netlify Functions)",
+  "scripts": {
+    "serve": "python -m http.server 8777",
+    "check:mobile": "node scripts/mobile-check.js",
+    "check:modal": "node scripts/test-modal.js"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.64.1"
+  }
+}

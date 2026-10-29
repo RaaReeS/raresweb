@@ -52,7 +52,6 @@ async function boot() {
   /* 2 · UI operativa (terminales, listados, formularios…) */
   safe('terminal', initTerminal);
   safe('editor-tabs', initEditorTabs);
-  safe('projects', initProjects);
   safe('github', initGitHub);
   safe('contact', initContact);
   safe('cursor', initCursor);
@@ -68,6 +67,15 @@ async function boot() {
            : document.querySelector(`#${id}`)?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' }));
 
   safe('navbar', () => initNavbar({ lenis, scrollToSection }));
+
+  /* 3b · El modal de proyectos necesita PAUSAR Lenis al abrirse
+     (si no, el fondo seguía scrolleando detrás del overlay). */
+  safe('projects', () =>
+    initProjects({
+      stopLenis: () => (lenis ? lenis.stop() : null),
+      startLenis: () => (lenis ? lenis.start() : null),
+    })
+  );
 
   /* 4 · Paleta de comandos necesita el contexto anterior */
   safe('palette', () =>

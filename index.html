@@ -324,7 +324,7 @@
   <header class="nav" data-nav>
     <div class="container nav__bar">
       <a class="nav__logo" href="#inicio" data-scroll aria-label="rares stanescu — inicio">
-        rs.<span class="nav__logo-caret" aria-hidden="true"></span>
+        rares.<span class="nav__logo-caret" aria-hidden="true"></span>
       </a>
 
       <nav class="nav__links" data-nav-links id="nav-links" aria-label="Navegación principal">
@@ -964,7 +964,7 @@
     <div class="container">
       <div class="footer__top">
         <div class="footer__brand">
-          <a class="nav__logo" href="#inicio" data-scroll>rs.<span class="nav__logo-caret" aria-hidden="true"></span></a>
+          <a class="nav__logo" href="#inicio" data-scroll>rares.<span class="nav__logo-caret" aria-hidden="true"></span></a>
           <p class="footer__due" data-i18n="footer.made">Hecho a mano con HTML, CSS y JavaScript — sin frameworks, sin build.</p>
         </div>
 
@@ -1009,35 +1009,37 @@
        MODAL DE PROYECTO (rellenado por projects.js)
        ===================================================== -->
   <dialog class="p-modal" id="project-modal" aria-labelledby="pmodal-title" data-project-modal>
-    <div class="p-modal__media" data-pmodal-media>
-      <button class="icon-btn p-modal__close" type="button" autofocus data-pmodal-close
-              data-i18n-attr="aria-label:a11y.projectClose" aria-label="Cerrar los detalles del proyecto">
-        <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
-      </button>
-      <span class="p-card__monogram" data-pmodal-monogram aria-hidden="true">PT</span>
+   <div class="p-modal__panel" data-pmodal-panel>
+     <div class="p-modal__media" data-pmodal-media>
+       <button class="icon-btn p-modal__close" type="button" autofocus data-pmodal-close
+               data-i18n-attr="aria-label:a11y.projectClose" aria-label="Cerrar los detalles del proyecto">
+         <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+       </button>
+       <span class="p-card__monogram" data-pmodal-monogram aria-hidden="true">PT</span>
+     </div>
+     <div class="p-modal__body">
+       <h3 class="p-modal__title" id="pmodal-title" data-pmodal-title>—</h3>
+       <p class="p-modal__long" data-pmodal-long>—</p>
+       <ul class="p-modal__list">
+         <li class="p-modal__item" style="display:none" data-pmodal-item-template>
+           <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+           <span data-pmodal-item-text></span>
+         </li>
+       </ul>
+       <ul class="tags" data-pmodal-tags></ul>
+       <div class="p-modal__actions">
+         <a class="btn btn--solid btn--sm" data-pmodal-repo target="_blank" rel="noopener noreferrer" data-pmodal-repo-label>
+           <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+           <span data-i18n="projects.modalCode">Ver código</span>
+         </a>
+         <a class="btn btn--ghost btn--sm" data-pmodal-demo target="_blank" rel="noopener noreferrer" data-pmodal-demo-label hidden>
+           <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>
+           <span data-i18n="projects.modalDemo">Ver demo</span>
+         </a>
+       </div>
+     </div>
     </div>
-    <div class="p-modal__body">
-      <h3 class="p-modal__title" id="pmodal-title" data-pmodal-title>—</h3>
-      <p class="p-modal__long" data-pmodal-long>—</p>
-      <ul class="p-modal__list">
-        <li class="p-modal__item" style="display:none" data-pmodal-item-template>
-          <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
-          <span data-pmodal-item-text></span>
-        </li>
-      </ul>
-      <ul class="tags" data-pmodal-tags></ul>
-      <div class="p-modal__actions">
-        <a class="btn btn--solid btn--sm" data-pmodal-repo target="_blank" rel="noopener noreferrer" data-pmodal-repo-label>
-          <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
-          <span data-i18n="projects.modalCode">Ver código</span>
-        </a>
-        <a class="btn btn--ghost btn--sm" data-pmodal-demo target="_blank" rel="noopener noreferrer" data-pmodal-demo-label hidden>
-          <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>
-          <span data-i18n="projects.modalDemo">Ver demo</span>
-        </a>
-      </div>
-    </div>
-  </dialog>
+</dialog>
 
   <!-- =====================================================
        PALETA DE COMANDOS (Ctrl/Cmd + K)
