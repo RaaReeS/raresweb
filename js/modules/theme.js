@@ -27,18 +27,29 @@ export function setTheme(theme) {
   const html = document.documentElement;
   if (getTheme() === theme) return;
 
-  // Activa la transición global de colores durante una breve ventana
+  const applyChange = () => {
+    html.dataset.theme = theme;
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch { /* sin almacenamiento */ }
+    // Notifica a módulos dependientes (canvas de partículas, cielo…)
+    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+  };
+
+  // Vía rápida: View Transitions API → un único crossfade compuesto por
+  // GPU (Chrome/Edge/Safari). Repintar TODO el DOM con transitions por
+  // elemento es lo que se percibe como "lag" al cambiar de tema.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (document.startViewTransition && !reduced) {
+    document.startViewTransition(applyChange);
+    return;
+  }
+
+  // Reserva: transición global de colores durante una breve ventana
+  // (cubre el morph de 240ms del CSS; más larga solo cuesta)
   html.classList.add('theme-anim');
-  window.setTimeout(() => html.classList.remove('theme-anim'), 450);
-
-  html.dataset.theme = theme;
-
-  try {
-    localStorage.setItem(THEME_KEY, theme);
-  } catch { /* sin almacenamiento */ }
-
-  // Notifica a módulos dependientes (canvas de partículas, cielo…)
-  document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+  window.setTimeout(() => html.classList.remove('theme-anim'), 300);
+  applyChange();
 }
 
 export function toggleTheme() {

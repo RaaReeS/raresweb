@@ -327,6 +327,13 @@
         rares.<span class="nav__logo-caret" aria-hidden="true"></span>
       </a>
 
+      <!-- Estado disponible: al lado del logo equilibra el peso visual
+           de los dos extremos (logo+pill vs idioma+tema+CV) y deja
+           los enlaces de verdad centrados en pantallas anchas -->
+      <span class="status-pill mono" aria-hidden="true">
+        <span class="status-dot"></span>
+        <span data-i18n="hero.statusShort">abierto · FCT</span>
+      </span>
       <nav class="nav__links" data-nav-links id="nav-links" aria-label="Navegación principal">
         <a class="nav__link" href="#sobre-mi" data-scroll data-i18n="nav.about">Sobre mí</a>
         <a class="nav__link" href="#stack" data-scroll data-i18n="nav.skills">Stack</a>
@@ -356,12 +363,6 @@
       </nav>
 
       <div class="nav__actions">
-        <!-- Estado disponible: elipsis visible arriba también -->
-        <span class="status-pill mono" aria-hidden="true">
-          <span class="status-dot"></span>
-          <span data-i18n="hero.statusShort">abierto · FCT</span>
-        </span>
-
         <!-- Selector de idioma ES / EN -->
         <div class="lang-switch" role="group" data-i18n-attr="aria-label:a11y.lang" aria-label="Cambiar el idioma de la web">
           <button class="lang-switch__btn" type="button" data-lang-btn="es" aria-pressed="true">ES</button>

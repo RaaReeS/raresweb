@@ -142,18 +142,43 @@
   color-scheme: light;
 }
 
-/* Transición global suave durante el cambio de tema (activada por JS) */
+/* Transición global suave durante el cambio de tema (activada por JS).
+   CORTA y solo propiedades de color: un morph largo de TODO el DOM con
+   box-shadow rampa el coste de pintado y es lo que percibe como "lag". */
 html.theme-anim,
 html.theme-anim *,
 html.theme-anim *::before,
 html.theme-anim *::after {
   transition:
-    background-color var(--t-med) ease,
-    color var(--t-med) ease,
-    border-color var(--t-med) ease,
-    box-shadow var(--t-med) ease,
-    fill var(--t-med) ease,
-    stroke var(--t-med) ease !important;
+    background-color 240ms ease,
+    color 240ms ease,
+    border-color 240ms ease,
+    fill 240ms ease,
+    stroke 240ms ease !important;
+}
+
+/* Durante el morph, cada capa con backdrop-filter (nav, tarjetas glass…
+   ~10 en la web) re-evaluaría el fondo que cambia debajo en cada frame.
+   Se apagan 240ms y vuelven sin coste al quitar la clase. */
+html.theme-anim *,
+html.theme-anim *::before,
+html.theme-anim *::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* View Transitions (vía rápida del tema): crossfade global corto.
+   Una sola composición GPU, sin repintar elemento a elemento. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 240ms;
+  animation-timing-function: ease;
+}
+
+/* El cursor personalizado sigue al ratón por JS: fuera del snapshot
+   para que no se congele 240ms durante el crossfade del tema */
+.cursor-dotc {
+  view-transition-name: none;
 }
 
 /* =========================================================
@@ -1942,6 +1967,14 @@ html.custom-cursor summary {
   margin-top: clamp(28px, 4vw, 44px);
 }
 
+/* IMPORTANTE: los <object> (visor PDF) tienen un min-content propio
+   que infla la columna y desborda el viewport en móvil (Chrome
+   expande el layout y corta el nav fijo). Cerramos el min-width. */
+.cv-grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .cv-window {
   border-radius: var(--radius);
   overflow: hidden;
@@ -3217,7 +3250,7 @@ html.custom-cursor summary {
 }
 
 @media (max-width: 640px) {
-  .nav__actions > .status-pill {
+  .nav__bar > .status-pill {
     display: none;
   }
   .skills__grid {
@@ -3314,6 +3347,52 @@ html.custom-cursor summary {
 
   .p-card:hover {
     transform: none;
+  }
+}
+
+/* =========================================================
+   21 · NAV MÓVIL: MÁS AIRE ENTRE CONTROLES
+   Tamaños originales (botones pequeños) y separación de 14px;
+   el grupo se alinea a la derecha como en escritorio.
+   (Al final del CSS para ganar la cascada sobre 19.)
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .nav__actions {
+    gap: 14px;
+    margin-inline-start: auto; /* el hueco sobrante va entre logo y controles */
+  }
+}
+
+/* =========================================================
+   22 · NAV ESCRITORIO: enlaces centrados en la barra
+   La barra ocupa el container completo (logo en el borde
+   izquierdo, controles en el derecho) y el bloque de enlaces
+   se ancla al 50% → centro EXACTO de la pantalla a cualquier
+   ancho, sin depender del peso de cada extremo.
+   (Con el pill "abierto · FCT" junto al logo, el hueco derecho
+   sobra y nada se roza.)
+   Solo ≥1280px: por debajo no caben holgados y se mantiene el
+   layout clásico; ≤920px es el panel móvil y no se toca.
+   ========================================================= */
+
+@media (min-width: 1280px) {
+  .nav__bar {
+    position: relative;
+  }
+
+  .nav__links {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: 0; /* la base empuja a la derecha; aquí manda el anclaje */
+    transform: translate(-50%, -50%);
+  }
+
+  /* Al salir los enlaces del flujo, las acciones necesitan el
+     empuje a la derecha que antes les daban los enlaces */
+  .nav__actions {
+    margin-inline-start: auto;
   }
 }
 
