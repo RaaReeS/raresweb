@@ -30,7 +30,7 @@ const VIEWPORTS = [
     await page.waitForTimeout(1000);
 
     const r = await page.evaluate(() => {
-      const panel = document.querySelector('.p-modal__panel');
+      const panel = document.querySelector('[data-pmodal-panel]');
       const tags = [...document.querySelectorAll('[data-pmodal-tags] .tag')];
       const lastTag = tags[tags.length - 1];
       const tr = lastTag.getBoundingClientRect();

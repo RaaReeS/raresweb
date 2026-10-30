@@ -12,7 +12,6 @@ import { t, setLang, getLang } from './i18n.js';
 import { getTheme, toggleTheme } from './theme.js';
 import { notify, copyEmail } from './contact.js';
 import { SITE } from '../../data/projects.js';
-
 let palette, panel, input, listEl;
 let items = [];        // { id, group, label, icon, kbd, run }
 let filtered = [];     // índices visibles
@@ -31,6 +30,7 @@ function buildItems(ctx) {
     { id: 'formacion', key: 'nav.education' },
     { id: 'certificaciones', key: 'timeline.titleCert' },
     { id: 'idiomas', key: 'nav.languages' },
+    { id: 'cv', key: 'nav.cv' },
     { id: 'contacto', key: 'nav.contact' },
   ];
 
@@ -67,6 +67,11 @@ function buildItems(ctx) {
       group: t('palette.gActions'), id: 'copy', label: t('palette.mail'),
       icon: 'i-copy',
       run: () => copyEmail(),
+    },
+    {
+      group: t('palette.gActions'), id: 'cv-view', label: t('palette.cvView'),
+      icon: 'i-file-text',
+      run: () => ctx.openCv?.(),
     },
     {
       group: t('palette.gActions'), id: 'cv', label: t('palette.cv'),

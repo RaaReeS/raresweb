@@ -335,6 +335,13 @@
         <a class="nav__link" href="#idiomas" data-scroll data-i18n="nav.languages">Idiomas</a>
         <a class="nav__link" href="#contacto" data-scroll data-i18n="nav.contact">Contacto</a>
 
+        <!-- Ver CV (visible en el menú móvil; en escritorio hay botón en la barra) -->
+        <button class="nav__link nav__cv-link" type="button" data-cv-open
+                data-i18n-attr="aria-label:a11y.cvOpen" aria-label="Ver el CV con vista previa">
+          <svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg>
+          <span data-i18n="nav.cvView">Ver CV</span>
+        </button>
+
         <!-- Atajos visibles solo en el panel del menú móvil -->
         <div class="nav__socials">
           <a class="icon-btn" href="https://github.com/RaaReeS" target="_blank" rel="noopener noreferrer"
@@ -367,10 +374,11 @@
           <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
         </button>
 
-        <!-- Paleta de comandos (botón visible + atajo Ctrl/Cmd K) -->
-        <button class="palette-btn" type="button" data-palette-open data-i18n-attr="aria-label:a11y.palette" aria-label="Abrir la paleta de comandos (Ctrl K)">
-          <svg class="icon" aria-hidden="true"><use href="#i-command"/></svg>
-          <kbd data-palette-kbd aria-hidden="true">Ctrl K</kbd>
+        <!-- Ver CV: en el extremo derecho de la barra -->
+        <button class="nav__cv" type="button" data-cv-open
+                data-i18n-attr="aria-label:a11y.cvOpen" aria-label="Ver el CV con vista previa">
+          <svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg>
+          <span data-i18n="nav.cv">CV</span>
         </button>
 
         <!-- Hamburguesa (móvil) -->
@@ -825,12 +833,85 @@
     </section>
 
     <!-- ==================================================
-         06 · CONTACTO · canales + formulario terminal
+         07 · CV · visor embebido + modal de vista previa
          ================================================== -->
-    <section class="section section--alt" id="contacto" data-section>
+    <section class="section section--alt" id="cv" data-section>
       <div class="container">
         <header class="section__head">
           <span class="section__num mono">07</span>
+          <h2 class="section__title" data-i18n="cv.title">Currículum</h2>
+          <p class="section__lead" data-i18n="cv.lead">Léelo aquí mismo, integrado en la web — sin descargas hasta que lo pidas.</p>
+        </header>
+
+        <div class="cv-grid">
+          <!-- Visor: el propio PDF renderizado en la página -->
+          <div class="window cv-window" data-cv-window>
+            <div class="window__bar">
+              <div class="window__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+              <span class="window__title mono">rares-stanescu · cv.pdf</span>
+            </div>
+            <div class="cv-viewer" data-cv-viewer>
+              <object class="cv-obj" type="application/pdf"
+                      data-i18n-attr="aria-label:cv.viewerAria" aria-label="Vista previa del CV en PDF"
+                      data-pdf-embed tabindex="0"></object>
+              <div class="cv-fallback" hidden data-cv-fallback>
+                <svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg>
+                <p class="cv-fallback__title" data-i18n="cv.fbTitle">La vista previa no está disponible en este dispositivo</p>
+                <p class="cv-fallback__body" data-i18n="cv.fbBody">Abre el PDF en su propia pestaña o descárgalo:</p>
+                <div class="cv-fallback__actions">
+                  <a class="btn btn--solid btn--sm" href="assets/cv.pdf" target="_blank" rel="noopener noreferrer" data-cv-ext>
+                    <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>
+                    <span data-i18n="cv.open">Abrir en pestaña nueva</span>
+                  </a>
+                  <a class="btn btn--ghost btn--sm" href="assets/cv.pdf" download data-cv-ext>
+                    <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+                    <span data-i18n="cv.downloadShort">Descargar</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Acciones rápidas -->
+          <aside class="glass cv-side">
+            <p class="mono cv-side__title" data-i18n="cv.sideTitle">// cv.pdf</p>
+            <ul class="cv-side__list">
+              <li class="cv-side__item">
+                <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+                <span data-i18n="cv.p1">Léelo sin salir de la web</span>
+              </li>
+              <li class="cv-side__item">
+                <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+                <span data-i18n="cv.p2">Descarga directa en PDF, un clic</span>
+              </li>
+              <li class="cv-side__item">
+                <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+                <span data-i18n="cv.p3">Abierto a FCT y candidaturas junior</span>
+              </li>
+            </ul>
+            <div class="cv-side__actions">
+              <button class="btn btn--solid" type="button" data-cv-open>
+                <svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg>
+                <span data-i18n="cv.view">Ver CV</span>
+              </button>
+              <a class="btn btn--ghost" href="assets/cv.pdf" download data-cv-ext>
+                <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+                <span data-i18n="cv.download">Descargar CV (PDF)</span>
+              </a>
+            </div>
+            <p class="mono cv-side__hint" aria-hidden="true">$ curl -O raresweb.com/assets/cv.pdf</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         08 · CONTACTO · canales + formulario terminal
+         ================================================== -->
+    <section class="section" id="contacto" data-section>
+      <div class="container">
+        <header class="section__head">
+          <span class="section__num mono">08</span>
           <h2 class="section__title" data-i18n="contact.title">Contacto</h2>
           <p class="section__lead" data-i18n-html="contact.lead">Cada mensaje es un <code>pull request</code> a mi bandeja de entrada.</p>
         </header>
@@ -1006,19 +1087,60 @@
   </footer>
 
   <!-- =====================================================
+       MODAL DE CV (vista previa + descarga; abre js/modules/cv.js)
+       ===================================================== -->
+  <dialog class="p-modal cv-modal" id="cv-modal" aria-labelledby="cvmodal-title" data-cv-modal>
+    <div class="p-modal__panel cv-modal__panel" data-cv-panel>
+      <button class="icon-btn p-modal__close" type="button" autofocus data-cv-close
+              data-i18n-attr="aria-label:a11y.cvClose" aria-label="Cerrar la vista previa del CV">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+
+      <div class="cv-modal__bar">
+        <h3 class="cv-modal__title mono" id="cvmodal-title">rares-stanescu · cv.pdf</h3>
+        <div class="cv-modal__actions">
+          <a class="btn btn--solid btn--sm" href="assets/cv.pdf" download data-cv-ext>
+            <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+            <span data-i18n="cv.download">Descargar CV (PDF)</span>
+          </a>
+          <a class="btn btn--ghost btn--sm" href="assets/cv.pdf" target="_blank" rel="noopener noreferrer" data-cv-ext>
+            <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>
+            <span data-i18n="cv.open">Abrir en pestaña nueva</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="cv-modal__viewer" data-cv-modal-viewer>
+        <object class="cv-obj" type="application/pdf"
+                data-i18n-attr="aria-label:cv.viewerAria" aria-label="Vista previa del CV en PDF"
+                data-pdf-embed tabindex="0"></object>
+        <div class="cv-fallback" hidden data-cv-fallback>
+          <svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg>
+          <p class="cv-fallback__title" data-i18n="cv.fbTitle">La vista previa no está disponible en este dispositivo</p>
+          <div class="cv-fallback__actions">
+            <a class="btn btn--solid btn--sm" href="assets/cv.pdf" target="_blank" rel="noopener noreferrer" data-cv-ext>
+              <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>
+              <span data-i18n="cv.open">Abrir en pestaña nueva</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+  <!-- =====================================================
        MODAL DE PROYECTO (rellenado por projects.js)
        ===================================================== -->
   <dialog class="p-modal" id="project-modal" aria-labelledby="pmodal-title" data-project-modal>
-   <div class="p-modal__panel" data-pmodal-panel>
-     <div class="p-modal__media" data-pmodal-media>
-       <button class="icon-btn p-modal__close" type="button" autofocus data-pmodal-close
-               data-i18n-attr="aria-label:a11y.projectClose" aria-label="Cerrar los detalles del proyecto">
-         <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
-       </button>
-       <span class="p-card__monogram" data-pmodal-monogram aria-hidden="true">PT</span>
-     </div>
-     <div class="p-modal__body">
-       <h3 class="p-modal__title" id="pmodal-title" data-pmodal-title>—</h3>
+    <div class="p-modal__panel" data-pmodal-panel>
+      <div class="p-modal__media" data-pmodal-media>
+        <button class="icon-btn p-modal__close" type="button" autofocus data-pmodal-close
+                data-i18n-attr="aria-label:a11y.projectClose" aria-label="Cerrar los detalles del proyecto">
+          <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+        <span class="p-card__monogram" data-pmodal-monogram aria-hidden="true">PT</span>
+      </div>
+      <div class="p-modal__body">
+        <h3 class="p-modal__title" id="pmodal-title" data-pmodal-title>—</h3>
        <p class="p-modal__long" data-pmodal-long>—</p>
        <ul class="p-modal__list">
          <li class="p-modal__item" style="display:none" data-pmodal-item-template>

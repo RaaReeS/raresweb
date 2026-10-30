@@ -17,6 +17,7 @@ import { initTheme, toggleTheme } from './modules/theme.js';
 import { initNavbar } from './modules/navbar.js';
 import { initTerminal, initEditorTabs } from './modules/terminal.js';
 import { initProjects } from './modules/projects.js';
+import { initCv, openCv } from './modules/cv.js';
 import { initGitHub } from './modules/github.js';
 import { initContact } from './modules/contact.js';
 import { initCursor } from './modules/cursor.js';
@@ -62,6 +63,9 @@ async function boot() {
   /* 3 · Contexto compartido: Lenis + scroll programático */
   const lenis = safe('smooth-scroll', initSmoothScroll) ?? null;
 
+  const stopLenis = () => (lenis ? lenis.stop() : null);
+  const startLenis = () => (lenis ? lenis.start() : null);
+
   const scrollToSection = (id) =>
     (lenis ? lenis.scrollTo(`#${id}`, { offset: -76, duration: 1.1 })
            : document.querySelector(`#${id}`)?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' }));
@@ -70,19 +74,18 @@ async function boot() {
 
   /* 3b · El modal de proyectos necesita PAUSAR Lenis al abrirse
      (si no, el fondo seguía scrolleando detrás del overlay). */
-  safe('projects', () =>
-    initProjects({
-      stopLenis: () => (lenis ? lenis.stop() : null),
-      startLenis: () => (lenis ? lenis.start() : null),
-    })
-  );
+  safe('projects', () => initProjects({ stopLenis, startLenis }));
+
+  /* 3c · CV: visor embebido en #cv + modal de vista previa. */
+  safe('cv', () => initCv({ stopLenis, startLenis }));
 
   /* 4 · Paleta de comandos necesita el contexto anterior */
   safe('palette', () =>
     initPalette({
       scrollToSection,
-      stopLenis: () => (lenis ? lenis.stop() : null),
-      startLenis: () => (lenis ? lenis.start() : null),
+      openCv, // comando "Ver el CV (vista previa)"
+      stopLenis,
+      startLenis,
     })
   );
 

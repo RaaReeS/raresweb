@@ -138,6 +138,12 @@ function bindMenu() {
   });
 }
 
+/** Cierre silencioso (sin devolver foco): para módulos externos
+ *  que abren un overlay (p. ej. la vista previa del CV desde el menú móvil). */
+export function closeMobileMenu() {
+  if (nav && nav.classList.contains('menu-open')) closeMenu(true);
+}
+
 /* =========================================================
    init
    ========================================================= */

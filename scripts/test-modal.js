@@ -18,7 +18,7 @@ const { chromium } = require('playwright-core');
 
   // ¿El panel cabe en el viewport sin scroll interno?
   const fit = await page.evaluate(() => {
-    const panel = document.querySelector('.p-modal__panel');
+    const panel = document.querySelector('[data-pmodal-panel]');
     const p = panel.getBoundingClientRect();
     return { fits: p.height <= window.innerHeight - 48 && panel.scrollTop === 0,
              panelH: Math.round(p.height), scrollable: panel.scrollHeight > panel.clientHeight };

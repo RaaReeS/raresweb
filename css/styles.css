@@ -1887,6 +1887,266 @@ html.custom-cursor summary {
 }
 
 /* =========================================================
+   10b · CV (visor embebido + modal de vista previa)
+   ========================================================= */
+
+/* Botón "CV" en la barra del nav (escritorio) */
+.nav__cv {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: var(--grad);
+  color: #fff;
+  font-family: var(--font-m);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 0 1px transparent;
+  transition: filter var(--t-fast), box-shadow var(--t-med), transform var(--t-fast);
+}
+
+.nav__cv .icon {
+  width: 15px;
+  height: 15px;
+}
+
+.nav__cv:hover {
+  filter: brightness(1.12);
+  box-shadow: var(--glow);
+}
+
+/* Entrada "Ver CV" del menú móvil: oculta en escritorio.
+   (En ≤920px hereda los estilos grandes de .nav__link.) */
+.nav__cv-link {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.nav__cv-link .icon {
+  width: 18px;
+  height: 18px;
+  color: var(--cyan);
+}
+
+/* Rejilla del apartado: visor + acciones */
+.cv-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 22px;
+  align-items: start;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.cv-window {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* Visor del PDF: alto fijo tipo "hoja", con su propio scroll */
+.cv-viewer {
+  position: relative;
+  height: clamp(540px, 78vh, 880px);
+  background: var(--surface);
+}
+
+.cv-obj {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.cv-obj:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: -2px;
+}
+
+/* Reserva cuando el dispositivo no puede incrustar PDFs (iOS):
+   oculta por defecto ([hidden]) y centrada cuando JS la activa */
+.cv-viewer .cv-fallback,
+.cv-modal__viewer .cv-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: 26px;
+  text-align: center;
+}
+
+/* El guard [hidden] debe ganar a la regla anterior: va después */
+.cv-fallback[hidden] {
+  display: none;
+}
+
+.cv-fallback .icon {
+  width: 34px;
+  height: 34px;
+  color: var(--cyan);
+}
+
+.cv-fallback__title {
+  font-weight: 600;
+}
+
+.cv-fallback__body {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.cv-fallback__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* Panel lateral con acciones */
+.cv-side {
+  padding: 22px;
+  display: grid;
+  gap: 16px;
+}
+
+.cv-side__title {
+  font-size: 0.86rem;
+  color: var(--faint);
+}
+
+.cv-side__list {
+  display: grid;
+  gap: 10px;
+}
+
+.cv-side__item {
+  display: flex;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.cv-side__item .icon {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+  translate: 0 3px;
+  color: var(--green);
+}
+
+.cv-side__actions {
+  display: grid;
+  gap: 10px;
+}
+
+.cv-side__hint {
+  font-size: 0.66rem;
+  color: var(--faint);
+  border-top: 1px dashed var(--border);
+  padding-block-start: 12px;
+}
+
+/* Modal de CV: reutiliza .p-modal (overlay + panel) y añade
+   una altura fija para que el PDF tenga espacio propio */
+.cv-modal .p-modal__panel {
+  height: min(86vh, 900px);
+  overflow: hidden; /* el scroll corre por cuenta del visor de PDF */
+}
+
+.cv-modal__bar {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 14px 58px 12px 18px; /* margen derecho para el botón cerrar */
+  border-bottom: 1px solid var(--border);
+}
+
+.cv-modal__title {
+  font-size: 0.92rem;
+  font-weight: 500;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cv-modal__actions {
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cv-modal__viewer {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  background: var(--surface);
+}
+
+.cv-modal__close {
+  top: 10px;
+  right: 10px;
+}
+
+@media (max-width: 980px) {
+  .cv-grid {
+    grid-template-columns: 1fr;
+  }
+  .cv-side__actions {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 920px) {
+  .nav__cv {
+    display: none; /* en móvil vive en el menú hamburguesa */
+  }
+  .nav__cv-link {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .cv-viewer {
+    height: clamp(420px, 62vh, 640px);
+  }
+  .cv-modal .p-modal__panel {
+    height: calc(100dvh - 20px);
+    max-height: calc(100dvh - 20px);
+  }
+  .cv-modal__bar {
+    padding: 12px 52px 10px 14px;
+    gap: 8px;
+  }
+  .cv-modal__title {
+    font-size: 0.8rem;
+    flex: 1 1 100%; /* el nombre ocupa la primera línea completa */
+  }
+  .cv-modal__actions {
+    margin-left: 0;
+  }
+  /* Solo el botón principal abajo en móvil; "abrir" queda en menú largo */
+  .cv-modal__actions .btn--sm {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+  .cv-fallback__actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: min(280px, 100%);
+  }
+}
+
+/* =========================================================
    11 · GITHUB (API)
    ========================================================= */
 

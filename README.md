@@ -51,6 +51,24 @@ Verifica automáticamente que al abrir un proyecto: se bloquea el scroll del
 fondo (Lenis pausado), vuelve el cursor nativo sobre el modal y todo se
 reanuda al cerrar.
 
+### 📄 Vista previa del CV (sin descarga)
+
+El CV se lee **dentro de la propia web**, en dos sitios:
+
+- **Apartado "07 · CV"** — visor `<object`> con el PDF embebido a tamaño de
+  hoja + botones "Ver CV", "Descargar" y "Abrir en pestaña nueva".
+- **Botón "CV" del nav (escritorio) / "Ver CV" del menú móvil** — abre un
+  modal con la misma vista previa, con descarga y apertura, todo desde ahí.
+- **iOS Safari** no incrusta PDFs en `<object`>: se detecta automáticamente
+  y se muestra una tarjeta con "Abrir el PDF" / "Descargar".
+
+Se puede probar con:
+
+```bash
+npm run serve
+node scripts/test-cv.js   # QA del modal y del visor (desktop + móvil + iOS)
+```
+
 ### 🛠️ Solución de problemas
 
 | Síntoma | Causa | Solución |

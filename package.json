@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "python -m http.server 8777",
     "check:mobile": "node scripts/mobile-check.js",
-    "check:modal": "node scripts/test-modal.js"
+    "check:modal": "node scripts/test-modal.js",
+    "check:cv": "node scripts/test-cv.js"
   },
   "devDependencies": {
     "playwright-core": "^1.64.1"
