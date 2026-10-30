@@ -137,12 +137,27 @@ function heroParticles() {
   let visible = true;
   let rafId = null;
 
-  /* Colores leídos del tema activo (índigo/cian) */
+  /* Colores leídos del tema/color activo (de las variables de marca:
+     en claro las bases (más oscuro); en oscuro las -2 (más luminoso)) */
+  const hexToRgba = (hex, alpha) => {
+    const value = (hex || '').trim();
+    const match = /^#([0-9a-f]{6})$/i.exec(value);
+    if (!match) return '';
+    const n = parseInt(match[1], 16);
+    return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
+  };
   const readColors = () => {
     const light = document.documentElement.dataset.theme === 'light';
+    const style = getComputedStyle(document.documentElement);
     return {
-      dot: light ? 'rgba(79, 70, 229, .55)' : 'rgba(165, 180, 252, .6)',
-      line: light ? 'rgba(8, 145, 178, .18)' : 'rgba(103, 232, 249, .16)',
+      dot: hexToRgba(
+        style.getPropertyValue(light ? '--indigo' : '--indigo-2'),
+        light ? 0.55 : 0.6,
+      ),
+      line: hexToRgba(
+        style.getPropertyValue(light ? '--cyan' : '--cyan-2'),
+        light ? 0.18 : 0.16,
+      ),
     };
   };
   const colors = readColors();
@@ -272,10 +287,12 @@ function heroParticles() {
     { passive: true }
   );
 
-  // Cambio de tema: recolorear
-  document.addEventListener('themechange', () => {
+  // Cambio de tema o color principal: recolorear
+  const repaintColors = () => {
     Object.assign(colors, readColors());
-  });
+  };
+  document.addEventListener('themechange', repaintColors);
+  document.addEventListener('accentchange', repaintColors);
 
   // easter egg: burst arcoíris 12 s
   document.addEventListener('konami', () => {

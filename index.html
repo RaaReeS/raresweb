@@ -73,6 +73,10 @@
         var t = localStorage.getItem('portfolio_theme');
         var sysLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
         document.documentElement.dataset.theme = t || (sysLight ? 'light' : 'dark');
+        var a = localStorage.getItem('portfolio_accent');
+        if (a === 'violeta' || a === 'esmeralda' || a === 'naranja') {
+          document.documentElement.dataset.accent = a;
+        }
         if (sessionStorage.getItem('portfolio_preloader') === '1') {
           document.documentElement.dataset.preloader = 'seen';
         }
@@ -297,6 +301,9 @@
       <polyline points="2 17 12 22 22 17"/>
       <polyline points="2 12 12 17 22 12"/>
     </symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24">
+      <path d="M12 2.7s6.3 6.6 6.3 11a6.3 6.3 0 0 1-12.6 0c0-4.4 6.3-11 6.3-11Z"/>
+    </symbol>
   </svg>
 
   <!-- =====================================================
@@ -360,6 +367,35 @@
             <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
           </a>
         </div>
+
+        <!-- Color principal (móvil): mismo selector, dentro del panel -->
+        <div class="nav__accents" role="group"
+             data-i18n-attr="aria-label:accent.title" aria-label="Elegir el color principal">
+          <button class="accent-item" type="button" data-accent-set="indigo" aria-pressed="true"
+                  style="--c1:#6366f1; --c2:#22d3ee">
+            <span class="sw" aria-hidden="true"><i></i><i></i></span>
+            <span class="name" data-i18n="accent.indigo">Índigo · cian</span>
+            <svg class="icon tick" aria-hidden="true"><use href="#i-check"/></svg>
+          </button>
+          <button class="accent-item" type="button" data-accent-set="violeta" aria-pressed="false"
+                  style="--c1:#a78bfa; --c2:#f472b6">
+            <span class="sw" aria-hidden="true"><i></i><i></i></span>
+            <span class="name" data-i18n="accent.violeta">Violeta · fucsia</span>
+            <svg class="icon tick" aria-hidden="true"><use href="#i-check"/></svg>
+          </button>
+          <button class="accent-item" type="button" data-accent-set="esmeralda" aria-pressed="false"
+                  style="--c1:#34d399; --c2:#2dd4bf">
+            <span class="sw" aria-hidden="true"><i></i><i></i></span>
+            <span class="name" data-i18n="accent.esmeralda">Esmeralda · turquesa</span>
+            <svg class="icon tick" aria-hidden="true"><use href="#i-check"/></svg>
+          </button>
+          <button class="accent-item" type="button" data-accent-set="naranja" aria-pressed="false"
+                  style="--c1:#fb923c; --c2:#f43f5e">
+            <span class="sw" aria-hidden="true"><i></i><i></i></span>
+            <span class="name" data-i18n="accent.naranja">Ámbar · coral</span>
+            <svg class="icon tick" aria-hidden="true"><use href="#i-check"/></svg>
+          </button>
+        </div>
       </nav>
 
       <div class="nav__actions">
@@ -374,6 +410,43 @@
           <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
           <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
         </button>
+
+        <!-- Cambiar el color principal: muestras desplegadas desde aquí -->
+        <div class="accent-wrap" data-accent-wrap>
+          <button class="icon-btn accent-btn" type="button" data-accent-btn aria-expanded="false"
+                  data-i18n-attr="aria-label:a11y.accent" aria-label="Cambiar el color principal de la web">
+            <svg class="icon" aria-hidden="true"><use href="#i-droplet"/></svg>
+            <span class="accent-btn__dot" aria-hidden="true"></span>
+          </button>
+
+          <div class="accent-menu" data-accent-menu role="menu"
+               data-i18n-attr="aria-label:accent.title" aria-label="Elegir el color principal">
+            <button class="accent-item" type="button" role="menuitemradio" aria-checked="true"
+                    data-accent-set="indigo" style="--c1:#6366f1; --c2:#22d3ee">
+              <span class="sw" aria-hidden="true"><i></i><i></i></span>
+              <span class="name" data-i18n="accent.indigo">Índigo · cian</span>
+              <svg class="icon tick" aria-hidden="true"><use href="#i-check"/></svg>
+            </button>
+            <button class="accent-item" type="button" role="menuitemradio" aria-checked="false"
+                    data-accent-set="violeta" style="--c1:#a78bfa; --c2:#f472b6">
+              <span class="sw" aria-hidden="true"><i></i><i></i></span>
+              <span class="name" data-i18n="accent.violeta">Violeta · fucsia</span>
+              <svg class="icon tick" aria-hidden="true"><use href="#i-check"/></svg>
+            </button>
+            <button class="accent-item" type="button" role="menuitemradio" aria-checked="false"
+                    data-accent-set="esmeralda" style="--c1:#34d399; --c2:#2dd4bf">
+              <span class="sw" aria-hidden="true"><i></i><i></i></span>
+              <span class="name" data-i18n="accent.esmeralda">Esmeralda · turquesa</span>
+              <svg class="icon tick" aria-hidden="true"><use href="#i-check"/></svg>
+            </button>
+            <button class="accent-item" type="button" role="menuitemradio" aria-checked="false"
+                    data-accent-set="naranja" style="--c1:#fb923c; --c2:#f43f5e">
+              <span class="sw" aria-hidden="true"><i></i><i></i></span>
+              <span class="name" data-i18n="accent.naranja">Ámbar · coral</span>
+              <svg class="icon tick" aria-hidden="true"><use href="#i-check"/></svg>
+            </button>
+          </div>
+        </div>
 
         <!-- Ver CV: en el extremo derecho de la barra -->
         <button class="nav__cv" type="button" data-cv-open

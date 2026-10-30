@@ -56,8 +56,9 @@
   /* Detalles */
   --dot: rgba(255, 255, 255, 0.05);
   --grid-line: rgba(255, 255, 255, 0.035);
-  --glow: 0 0 32px rgba(99, 102, 241, 0.28);
-  --glow-strong: 0 0 46px rgba(34, 211, 238, 0.3);
+  /* glows derivan del color de marca → el selector de color los recolorea */
+  --glow: 0 0 32px color-mix(in srgb, var(--indigo) 28%, transparent);
+  --glow-strong: 0 0 46px color-mix(in srgb, var(--cyan) 30%, transparent);
   --shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
   --shadow-sm: 0 10px 30px -12px rgba(0, 0, 0, 0.5);
 
@@ -130,12 +131,12 @@
   --red: #dc2626;
   --amber: #b45309;
 
-  --grad: linear-gradient(110deg, #4f46e5 0%, #0891b2 100%);
+  --grad: linear-gradient(110deg, var(--indigo) 0%, var(--cyan) 100%);
 
   --dot: rgba(12, 12, 30, 0.07);
   --grid-line: rgba(12, 12, 30, 0.045);
-  --glow: 0 0 30px rgba(79, 70, 229, 0.2);
-  --glow-strong: 0 0 40px rgba(8, 145, 178, 0.18);
+  --glow: 0 0 30px color-mix(in srgb, var(--indigo) 20%, transparent);
+  --glow-strong: 0 0 40px color-mix(in srgb, var(--cyan) 18%, transparent);
   --shadow: 0 24px 50px -28px rgba(30, 30, 70, 0.35);
   --shadow-sm: 0 10px 24px -14px rgba(30, 30, 70, 0.3);
 
@@ -3394,6 +3395,187 @@ html.custom-cursor summary {
   .nav__actions {
     margin-inline-start: auto;
   }
+}
+
+/* =========================================================
+   23 · COLOR PRINCIPAL ELECTABLE ([data-accent] en <html>)
+   Cada paleta solo recolorea los 4 tokens de marca;
+   --grad y --glow ya derivan con color-mix. Los pares
+   [data-theme='light'][data-accent=…] van DESPUÉS del bloque
+   de tema claro para ganar la cascada solo en claro.
+   UI del selector: desplegable en el nav (≥921px) y fila de
+   muestras dentro del panel móvil (≤920px). Lógica en
+   js/modules/accent.js.
+   ========================================================= */
+
+[data-accent='violeta'] {
+  --indigo: #a78bfa;
+  --indigo-2: #c084fc;
+  --cyan: #f472b6;
+  --cyan-2: #f9a8d4;
+}
+
+[data-theme='light'][data-accent='violeta'] {
+  --indigo: #7c3aed;
+  --indigo-2: #8b5cf6;
+  --cyan: #db2777;
+  --cyan-2: #ec4899;
+}
+
+[data-accent='esmeralda'] {
+  --indigo: #34d399;
+  --indigo-2: #6ee7b7;
+  --cyan: #2dd4bf;
+  --cyan-2: #5eead4;
+}
+
+[data-theme='light'][data-accent='esmeralda'] {
+  --indigo: #059669;
+  --indigo-2: #10b981;
+  --cyan: #0d9488;
+  --cyan-2: #14b8a6;
+}
+
+[data-accent='naranja'] {
+  --indigo: #fb923c;
+  --indigo-2: #fdba74;
+  --cyan: #f43f5e;
+  --cyan-2: #fb7185;
+}
+
+[data-theme='light'][data-accent='naranja'] {
+  --indigo: #ea580c;
+  --indigo-2: #f97316;
+  --cyan: #e11d48;
+  --cyan-2: #fb7185;
+}
+
+/* --- UI: botón en el nav (solo escritorio/tablet landscape) --- */
+.accent-wrap {
+  position: relative;
+  display: none;
+}
+
+@media (min-width: 921px) {
+  .accent-wrap {
+    display: inline-flex;
+  }
+}
+
+.accent-btn {
+  position: relative;
+}
+
+/* puntito del color activo, sobre la esquina del botón */
+.accent-btn__dot {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--indigo);
+  border: 1.5px solid var(--bg);
+  transition: background-color var(--t-fast) ease;
+}
+
+.accent-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 230;
+  width: max(15rem, 218px);
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity var(--t-fast) ease, transform var(--t-fast) var(--ease);
+}
+
+.accent-wrap.is-open .accent-menu {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* --- Fila de muestras dentro del panel del menú móvil --- */
+.nav__accents {
+  display: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (max-width: 920px) {
+  .nav__accents {
+    display: grid;
+    padding-block-start: 22px;
+  }
+}
+
+/* --- Muestras (compartido por el desplegable y el panel) --- */
+.accent-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: none;
+  color: var(--text);
+  font: 500 var(--fs-small) / 1.4 var(--font-b);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--t-fast) ease, border-color var(--t-fast) ease;
+}
+
+.accent-item:hover {
+  background: var(--surface);
+}
+
+.accent-item.is-on {
+  background: var(--surface-2);
+  border-color: var(--border-strong);
+}
+
+.accent-item .sw {
+  display: inline-flex;
+  flex: none;
+}
+
+.accent-item .sw i {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--c1);
+  border: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+.accent-item .sw i + i {
+  background: var(--c2);
+  margin-inline-start: -6px;
+}
+
+.accent-item .name {
+  flex: 1;
+}
+
+.accent-item .tick {
+  flex: none;
+  display: none;
+  width: 15px;
+  height: 15px;
+  color: var(--indigo);
+  transition: color var(--t-fast) ease;
+}
+
+.accent-item.is-on .tick {
+  display: block;
 }
 
 

@@ -14,6 +14,7 @@
 
 import { initI18n, bindLangButtons } from './modules/i18n.js';
 import { initTheme, toggleTheme } from './modules/theme.js';
+import { initAccent, setAccent } from './modules/accent.js';
 import { initNavbar } from './modules/navbar.js';
 import { initTerminal, initEditorTabs } from './modules/terminal.js';
 import { initProjects } from './modules/projects.js';
@@ -48,6 +49,7 @@ async function boot() {
   /* 1 · Textos y tema primero (todo el contenido toma idioma/tema) */
   safe('i18n', initI18n);
   safe('theme', initTheme);
+  safe('accent', initAccent);
   safe('lang-buttons', bindLangButtons);
 
   /* 2 · UI operativa (terminales, listados, formularios…) */

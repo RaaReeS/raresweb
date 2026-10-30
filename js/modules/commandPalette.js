@@ -10,6 +10,7 @@
 
 import { t, setLang, getLang } from './i18n.js';
 import { getTheme, toggleTheme } from './theme.js';
+import { setAccent } from './accent.js';
 import { notify, copyEmail } from './contact.js';
 import { SITE } from '../../data/projects.js';
 let palette, panel, input, listEl;
@@ -58,6 +59,19 @@ function buildItems(ctx) {
       icon: 'i-terminal',
       run: () => setLang('es'),
     },
+    // Color principal: una orden por paleta (la activa lleva ✓ implícito)
+    ...[
+      ['indigo', 'i-droplet'],
+      ['violeta', 'i-droplet'],
+      ['esmeralda', 'i-droplet'],
+      ['naranja', 'i-droplet'],
+    ].map(([id, icon]) => ({
+      group: t('palette.gColors'),
+      id: `accent-${id}`,
+      label: t('palette.accentItem', { color: t(`accent.${id}`) }),
+      icon,
+      run: () => setAccent(id),
+    })),
     {
       group: t('palette.gActions'), id: 'lang-en', label: t('palette.langEn'),
       icon: 'i-terminal',
@@ -270,5 +284,14 @@ export function initPalette(ctx) {
 
   document.addEventListener('themechange', () => {
     if (palette.classList.contains('is-open')) renderList();
+  });
+
+  // Al cambiar el color, refresca (los textos de paleta no cambian,
+  // pero si se re-abre la lista ya refleja el estado actual)
+  document.addEventListener('accentchange', () => {
+    if (palette.classList.contains('is-open')) {
+      items = buildItems(ctx);
+      renderList();
+    }
   });
 }

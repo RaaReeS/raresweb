@@ -21,6 +21,7 @@ export const translations = {
       li: 'LinkedIn de Rares Stanescu — abre en una pestaña nueva',
       mail: 'Enviar un email a Rares Stanescu',
       theme: 'Cambiar entre tema oscuro y claro',
+      accent: 'Cambiar el color principal de la web',
       lang: 'Cambiar el idioma de la web',
       palette: 'Abrir la paleta de comandos (Ctrl K)',
       menuOpen: 'Abrir el menú de navegación',
@@ -51,6 +52,14 @@ export const translations = {
       toLight: 'Cambiar a tema claro',
     },
 
+    accent: {
+      title: 'Elegir el color principal',
+      indigo: 'Índigo · cian',
+      violeta: 'Violeta · fucsia',
+      esmeralda: 'Esmeralda · turquesa',
+      naranja: 'Ámbar · coral',
+    },
+
     lang: {
       es: 'Español',
       en: 'English',
@@ -70,6 +79,8 @@ export const translations = {
       theme: 'Cambiar tema (actual: {theme})',
       themeLight: 'claro',
       themeDark: 'oscuro',
+      gColors: 'Color principal',
+      accentItem: 'Cambiar el color a {color}',
       langEs: 'Cambiar idioma a Español',
       langEn: 'Cambiar idioma a English',
       gh: 'Abrir GitHub en una pestaña nueva',
@@ -320,6 +331,7 @@ export const translations = {
       toTop: 'Back to top',
       copy: 'Copy the email address',
       code: 'Open the code repository',
+      accent: 'Change the site’s main colour',
     },
 
     nav: {
@@ -338,6 +350,14 @@ export const translations = {
     theme: {
       toDark: 'Switch to dark theme',
       toLight: 'Switch to light theme',
+    },
+
+    accent: {
+      title: 'Choose the site’s main colour',
+      indigo: 'Indigo · cyan',
+      violeta: 'Violet · fuchsia',
+      esmeralda: 'Emerald · teal',
+      naranja: 'Amber · coral',
     },
 
     lang: {
@@ -359,6 +379,8 @@ export const translations = {
       theme: 'Toggle theme (current: {theme})',
       themeLight: 'light',
       themeDark: 'dark',
+      gColors: 'Main colour',
+      accentItem: 'Change the colour to {color}',
       langEs: 'Switch language to Español',
       langEn: 'Switch language to English',
       gh: 'Open GitHub in a new tab',
