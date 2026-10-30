@@ -1692,7 +1692,21 @@ html.custom-cursor summary {
   box-shadow: var(--shadow), var(--glow);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  overflow-y: auto; /* solo aparece si un viewport realmente bajo lo exige */
+  /* El contenido puede superar la altura en móviles bajos/apaisados:
+     el panel scrollea POR DENTRO, sin arrastrar la página de detrás */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* Scrollbar discreta: affordance visual de que el panel scrollea */
+.p-modal__panel::-webkit-scrollbar {
+  width: 4px;
+}
+.p-modal__panel::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 99px;
 }
 
 .p-modal[open] .p-modal__panel {
@@ -1709,19 +1723,6 @@ html.custom-cursor summary {
   place-items: center;
   overflow: hidden;
   isolation: isolate;
-}
-
-@media (max-width: 640px) {
-  .p-modal__panel {
-    max-height: calc(100vh - 24px);
-  }
-  .p-modal__media {
-    height: 128px;
-  }
-  .p-modal__body {
-    padding: 18px 18px 22px;
-    gap: 12px;
-  }
 }
 
 /* Solo cuando no hay captura: gradiente + trama como las tarjetas */
@@ -1802,6 +1803,49 @@ html.custom-cursor summary {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+/* En móvil el popup se comporta como bottom-sheet: compacto, standalone,
+   y con las acciones siempre visibles pegadas al borde inferior.
+   (Al final del bloque para ganar la cascada sobre las reglas base.) */
+@media (max-width: 640px) {
+  .p-modal {
+    padding: 14px;
+  }
+  .p-modal__panel {
+    max-height: calc(100dvh - 28px);
+  }
+  .p-modal__media {
+    height: 112px;
+  }
+  .p-modal__body {
+    padding: 16px 16px 12px;
+    gap: 10px;
+  }
+  .p-modal__long {
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+  .p-modal__list {
+    gap: 6px;
+    padding: 10px 12px;
+  }
+  .p-modal__item {
+    font-size: 0.76rem;
+  }
+  /* CTAs pegajosos: accesibles aunque haya que scrollear el contenido */
+  .p-modal__actions {
+    position: sticky;
+    bottom: 0;
+    margin: 0 -16px;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--bg-2) 96%, transparent),
+      color-mix(in srgb, var(--bg-2) 92%, transparent) 70%,
+      transparent
+    );
+  }
 }
 
 /* =========================================================
