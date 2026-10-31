@@ -3174,6 +3174,11 @@ html.custom-cursor summary {
     align-content: start;
     gap: 6px;
     padding: 30px var(--gutter);
+    /* Pantallas cortas: el panel (enlaces + CV + redes + colores)
+       desborda → scroll interno del propio panel. */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-block-end: max(30px, env(safe-area-inset-bottom));
     margin: 0;
     background: color-mix(in srgb, var(--bg) 86%, transparent);
     backdrop-filter: blur(18px);
