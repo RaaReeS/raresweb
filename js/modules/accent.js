@@ -6,14 +6,18 @@
      sus -2): los degradados (--grad) y glows derivan con
      color-mix en styles.css.
    - Persistencia en localStorage + anti-flash inline en <head>.
-   - UI: desplegable junto al tema en la barra (≥921px) y fila
-     de muestras dentro del panel móvil (≤920px).
+   - UI: botón de gota en la barra del nav en TODOS los tamaños
+     con desplegable anclado; se descarta con clic fuera, Esc
+     y scroll real (>24px).
    - Emite 'accentchange' (canvas de partículas se recolorea).
    ========================================================= */
 
 const ACCENT_KEY = 'portfolio_accent';
 
 const VALID = new Set(['indigo', 'violeta', 'esmeralda', 'naranja']);
+
+/** scrollY en el que se abrió el desplegable (−1 = cerrado). */
+let openedAtY = -1;
 
 /** Id de la paleta activa (fraude tolerante: si no hay, índigo). */
 export function getAccent() {
@@ -23,6 +27,7 @@ export function getAccent() {
 
 /** Cierra cualquier desplegable de color que esté abierto. */
 function closeMenus() {
+  openedAtY = -1;
   document.querySelectorAll('[data-accent-wrap].is-open').forEach((wrap) => {
     wrap.classList.remove('is-open');
     wrap.querySelector('[data-accent-btn]')?.setAttribute('aria-expanded', 'false');
@@ -84,6 +89,10 @@ export function initAccent() {
       const wrap = btn.closest('[data-accent-wrap]');
       const open = wrap.classList.toggle('is-open');
       btn.setAttribute('aria-expanded', String(open));
+      // recuerda el scroll de apertura: si el usuario se desplaza de
+      // verdad más adelante, el desplegable se descarta (sin estados
+      // raros del nav) — el umbral ignora el micro-scroll de un tap
+      openedAtY = open ? window.scrollY : -1;
     });
   });
 
@@ -91,13 +100,22 @@ export function initAccent() {
     item.addEventListener('click', () => setAccent(item.dataset.accentSet));
   });
 
-  // Cierres: clic fuera del desplegable y tecla Esc
+  // Cierres: clic fuera del desplegable, tecla Esc y scroll real
+  // (>24px desde la apertura: el micro-scroll del toque no lo cierra)
   document.addEventListener('click', (event) => {
     if (!event.target.closest('[data-accent-wrap]')) closeMenus();
   });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeMenus();
   });
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (openedAtY === -1) return;
+      if (Math.abs(window.scrollY - openedAtY) > 24) closeMenus();
+    },
+    { passive: true }
+  );
 
   sync();
 }

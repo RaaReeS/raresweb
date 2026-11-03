@@ -52,8 +52,13 @@ function onScroll() {
     // fondo sólido + sombra si pasamos de 24px
     nav.classList.toggle('is-solid', y > 24);
 
-    // ocultar al bajar (salvo menú abierto)
-    if (y > 140 && y > lastY) nav.classList.add('is-hidden');
+    // ocultar al bajar — SALVO menú móvil o desplegable de color abiertos:
+    // si el nav se traduce -105% con una capa anclada a él, la capa se va
+    // hacia arriba a medias (el bug de "el menú se ve solo arriba")
+    const overlayOpen =
+      nav.classList.contains('menu-open') ||
+      !!document.querySelector('[data-accent-wrap].is-open');
+    if (!overlayOpen && y > 140 && y > lastY) nav.classList.add('is-hidden');
     else nav.classList.remove('is-hidden');
     lastY = y;
   });
@@ -89,6 +94,8 @@ function initSpy() {
 
 function openMenu() {
   nav.classList.add('menu-open');
+  // el panel ancla al nav: obligar a que esté visible
+  nav.classList.remove('is-hidden');
   burger.setAttribute('aria-expanded', 'true');
   burger.dataset.i18nAttr = 'aria-label:a11y.menuClose';
   burger.setAttribute('aria-label', t('a11y.menuClose'));

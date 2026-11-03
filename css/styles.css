@@ -3358,14 +3358,20 @@ html.custom-cursor summary {
 
 /* =========================================================
    21 · NAV MÓVIL: MÁS AIRE ENTRE CONTROLES
-   Tamaños originales (botones pequeños) y separación de 14px;
+   Tamaños originales (botones pequeños) y separación justa;
    el grupo se alinea a la derecha como en escritorio.
+   Con el 4º control (color) se usa aire de 10px para que
+   quepan los cinco elementos hasta en 360px.
    (Al final del CSS para ganar la cascada sobre 19.)
    ========================================================= */
 
 @media (max-width: 640px) {
+  .nav__bar {
+    gap: 12px;
+  }
+
   .nav__actions {
-    gap: 14px;
+    gap: 10px;
     margin-inline-start: auto; /* el hueco sobrante va entre logo y controles */
   }
 }
@@ -3408,9 +3414,8 @@ html.custom-cursor summary {
    --grad y --glow ya derivan con color-mix. Los pares
    [data-theme='light'][data-accent=…] van DESPUÉS del bloque
    de tema claro para ganar la cascada solo en claro.
-   UI del selector: desplegable en el nav (≥921px) y fila de
-   muestras dentro del panel móvil (≤920px). Lógica en
-   js/modules/accent.js.
+   UI del selector: botón de gota en el nav (todos los tamaños)
+   + desplegable anclado. Lógica en js/modules/accent.js.
    ========================================================= */
 
 [data-accent='violeta'] {
@@ -3455,16 +3460,10 @@ html.custom-cursor summary {
   --cyan-2: #fb7185;
 }
 
-/* --- UI: botón en el nav (solo escritorio/tablet landscape) --- */
+/* --- UI: botón en el nav (todos los tamaños; ancla su desplegable) --- */
 .accent-wrap {
   position: relative;
-  display: none;
-}
-
-@media (min-width: 921px) {
-  .accent-wrap {
-    display: inline-flex;
-  }
+  display: inline-flex;
 }
 
 .accent-btn {
@@ -3507,20 +3506,6 @@ html.custom-cursor summary {
   opacity: 1;
   transform: none;
   pointer-events: auto;
-}
-
-/* --- Fila de muestras dentro del panel del menú móvil --- */
-.nav__accents {
-  display: none;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-@media (max-width: 920px) {
-  .nav__accents {
-    display: grid;
-    padding-block-start: 22px;
-  }
 }
 
 /* --- Muestras (compartido por el desplegable y el panel) --- */
