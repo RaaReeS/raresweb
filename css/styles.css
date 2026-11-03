@@ -859,10 +859,24 @@ html.custom-cursor summary {
 
 .nav.is-solid {
   background: color-mix(in srgb, var(--bg) 82%, transparent);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 10px 34px -20px rgba(0, 0, 0, 0.7);
+}
+
+/* El blur NO va en el propio nav: en WebKit (iOS Safari) un ancestro
+   con backdrop-filter RECORTA a sus descendientes a la propia caja,
+   y el panel a pantalla completa y el desplegable de color — colgados
+   del nav — se veían como una tira del alto del nav al escrollear.
+   La capa aparte (::before) filtra el fondo igual y deja a los menús
+   fuera del alcance del recorte. (el theme morph apaga el filtro con
+   .theme-anim *::before ✓) */
+.nav.is-solid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
 
 .nav.is-hidden {
