@@ -14,8 +14,8 @@
                          (por defecto: onboarding@resend.dev)
        RESEND_TO       → destino (por defecto: SITE.EMAIL)
 
-   Devuelve { status, body } listo para que cada adapter
-   (Vercel / Netlify) lo devuelva tal cual.
+   Devuelve { status, body } listo para que el adapter
+   (Vercel) lo devuelva tal cual.
    ========================================================= */
 
 import { SITE } from '../../data/projects.js';

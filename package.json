@@ -2,7 +2,7 @@
   "name": "portfolio-rares-stanescu",
   "version": "1.0.0",
   "private": true,
-  "description": "Portfolio estático de Rares Stanescu — desarrollador web junior (HTML/CSS/JS + Netlify Functions)",
+  "description": "Portfolio estático de Rares Stanescu — desarrollador web junior (HTML/CSS/JS + Vercel Functions)",
   "scripts": {
     "serve": "python -m http.server 8777",
     "check:mobile": "node scripts/mobile-check.js",

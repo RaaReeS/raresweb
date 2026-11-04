@@ -17,7 +17,6 @@ import { SITE } from '../../data/projects.js';
    │  ⚙️  CONFIGURACIÓN ÚNICA                             │
    │  Ruta del endpoint que envía el email con Resend.    │
    │  - Vercel:  '/api/contact'      (api/contact.js)     │
-   │  - Netlify: '/.netlify/functions/contact'            │
    │  - Vacío ''  → modo local (mailto, sin backend)      │
    └─────────────────────────────────────────────────────┘ */
 export const CONTACT_ENDPOINT = '/api/contact'; // ← CAMBIAR/VACIAR AQUÍ
