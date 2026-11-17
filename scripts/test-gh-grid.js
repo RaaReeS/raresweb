@@ -40,6 +40,19 @@ const { chromium } = require('playwright-core');
   });
   console.log('== GH GRID ==', JSON.stringify(info, null, 2));
 
+  // Clic en el centro de la primera tarjeta (zona sin enlace visible)
+  // → debe abrir el repo en pestaña nueva vía el enlace estirado.
+  const card = page.locator('.repo-card').first();
+  await card.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(500);
+  const [popup] = await Promise.allSettled([
+    page.context().waitForEvent('page', { timeout: 4000 }),
+    card.click({ position: { x: 60, y: 60 } }),
+  ]);
+  const popupUrl = popup.status === 'fulfilled' && popup.value ? popup.value.url() : null;
+  const nameHref = await page.evaluate(() => document.querySelector('.repo-card__name')?.href);
+  console.log('== GH CLICK ==', JSON.stringify({ nameHref, popupUrl }, null, 2));
+
   await page.screenshot({ path: 'C:\\Users\\L\\Desktop\\shots\\gh-grid.png' });
   await browser.close();
 })();

@@ -2270,11 +2270,21 @@ html.custom-cursor summary {
 }
 
 .repo-card {
+  position: relative; /* ancla para el enlace estirado del nombre */
   padding: 18px;
   display: grid;
   gap: 10px;
   align-content: start;
   transition: transform var(--t-fast) var(--ease), border-color var(--t-med), box-shadow var(--t-med);
+}
+
+/* Enlace estirado: toda la tarjeta es clicable y lleva al repo
+   (misma técnica que .p-card__open en las tarjetas de proyectos) */
+.repo-card__name::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .repo-card:hover {
