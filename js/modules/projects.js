@@ -101,6 +101,9 @@ function cardHTML(p, index) {
 /** Dibuja (o redibuja) todas las tarjetas. */
 export function renderProjects() {
   if (!grid) return;
+  // Con nº impar de proyectos, la última tarjeta se centra (ver CSS:
+  // .projects__grid--odd)
+  grid.classList.toggle('projects__grid--odd', projects.length % 2 !== 0);
   grid.innerHTML = projects.map(cardHTML).join('');
   bindTilt();
   bindSpotlight();

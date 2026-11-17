@@ -21,6 +21,44 @@ export const SITE = {
 
 export const projects = [
   {
+    id: 'safebite',
+    title: 'SafeBite',
+    monogram: 'SB',
+    hash: 'c91e4b7',
+    snippet: 'filter: allergens · menu: qr · db: rls',
+    tech: ['TypeScript', 'Next.js', 'React Native / Expo', 'Supabase / PostgreSQL', 'pnpm + Turborepo'],
+    accent: 'indigo',
+    image: null,
+    demo: 'https://safebitee.vercel.app',
+    repo: 'https://github.com/RaaReeS/SafeBite',
+    short: {
+      es: 'Plataforma para personas con alergias e intolerancias que quieren comer fuera de casa: cartas con alérgenos por QR, perfiles de familia y escaneo de productos.',
+      en: 'Platform for people with allergies and intolerances who want to eat out: allergen menus via QR, family profiles and packaged-product scanning.',
+    },
+    long: {
+      es: 'Proyecto para personas con alergias, intolerancias y dietas específicas que quieren comer fuera de casa con más tranquilidad. Los restaurantes declaran los 14 alérgenos de cada plato (Reglamento (UE) n.º 1169/2011), publican su carta con un código QR y descargan una tabla de alérgenos imprimible; cualquier comensal puede filtrar esa carta por sus alergias sin registrarse. La web y la app móvil permiten guardar el perfil de alergias propio y el de la familia, buscar en el mapa dónde se puede comer y escanear productos envasados con datos de Open Food Facts. Monorepo en TypeScript con pnpm y Turborepo: Next.js para la web, React Native + Expo para la app móvil y Supabase (Postgres con seguridad por filas) como base de datos.',
+      en: 'Project for people with allergies, intolerances and specific diets who want to eat out with more peace of mind. Restaurants declare the 14 allergens of each dish (EU Regulation No 1169/2011), publish their menu with a QR code and download a printable allergen table; any diner can filter that menu by their allergies without signing up. The web and mobile app let users save their own and their family\'s allergy profile, search a map for places they can eat at, and scan packaged products using Open Food Facts data. TypeScript monorepo with pnpm and Turborepo: Next.js for the web, React Native + Expo for the mobile app and Supabase (Postgres with row-level security) as the database.',
+    },
+    highlights: {
+      es: [
+        'Carta pública por QR, filtrable por alergias y sin registro',
+        'Panel para restaurantes: los 14 alérgenos (Reglamento UE 1169/2011) y tabla imprimible',
+        'Perfil de alergias personal y familiar en web y app móvil',
+        'Búsqueda en mapa de dónde se puede comer',
+        'Escaneo de productos envasados con datos de Open Food Facts',
+        'Monorepo TypeScript (pnpm + Turborepo) con Next.js, Expo y Supabase',
+      ],
+      en: [
+        'Public QR menu, filterable by allergies and without sign-up',
+        'Restaurant panel: the 14 allergens (EU Regulation 1169/2011) and a printable table',
+        'Personal and family allergy profile on web and mobile app',
+        'Map search for places you can eat at',
+        'Packaged-product scanning using Open Food Facts data',
+        'TypeScript monorepo (pnpm + Turborepo) with Next.js, Expo and Supabase',
+      ],
+    },
+  },
+  {
     id: 'premiumtrade',
     title: 'PremiumTrade',
     monogram: 'PT',

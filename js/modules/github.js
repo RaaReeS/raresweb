@@ -143,10 +143,34 @@ function showNote(text, { retry = false } = {}) {
 
 let currentSet = null; // repos mostrados ahora mismo (para re-render de idioma)
 
+/**
+ * Nº de columnas reales de la grid (leído del computed style), para
+ * repartir la última fila sin duplicar los breakpoints del CSS.
+ */
+function columnsNow() {
+  if (!grid) return 1;
+  const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length;
+  return cols || 1;
+}
+
 function renderRepos(repos) {
   if (!grid) return;
   currentSet = repos;
-  grid.innerHTML = repos.map(repoCardHTML).join('');
+
+  // Última fila coherente: si la fila final queda incompleta (p. ej.
+  // 4 repos en 3 columnas → 3+1), las sobrantes se agrupan en un
+  // wrapper a ancho completo (.gh__grid-last) que las centra con el
+  // ancho de una columna. Con nº par se reparten normal.
+  const cols = columnsNow();
+  const remainder = repos.length % cols;
+  const cut = remainder === 0 ? repos.length : repos.length - remainder;
+
+  grid.innerHTML =
+    repos.slice(0, cut).map(repoCardHTML).join('') +
+    (remainder
+      ? `<div class="gh__grid-last">${repos.slice(cut).map(repoCardHTML).join('')}</div>`
+      : '');
+
   if (countEl) {
     countEl.hidden = false;
     countEl.textContent = t('gh.count', { n: repos.length });
@@ -203,6 +227,16 @@ export function initGitHub() {
   if (noteRetry) {
     noteRetry.addEventListener('click', () => load());
   }
+
+  // Al redimensionar cambia el nº de columnas → repartir la última
+  // fila de nuevo (sin refetch, con los datos ya en currentSet).
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (currentSet) renderRepos(currentSet);
+    }, 150);
+  });
 
   // Reformatear fechas y descripciones al cambiar de idioma (sin refetch)
   document.addEventListener('langchange', () => {

@@ -1539,6 +1539,17 @@ html.custom-cursor summary {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+/* Nº impar de tarjetas: la última se centra ocupando media fila
+   (mitad del ancho menos la mitad del gap de 22px). Solo aplica en
+   la vista de 2 columnas; en móvil la grid ya es de 1 columna. */
+@media (min-width: 721px) {
+  .projects__grid--odd > .p-card:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 11px);
+  }
+}
+
 .p-card {
   position: relative;
   display: flex;
@@ -2237,9 +2248,25 @@ html.custom-cursor summary {
 }
 
 .gh__grid {
+  --gh-cols: 3;
   display: grid;
   gap: 14px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Última fila incompleta (p. ej. 4 repos en 3 columnas → 3+1): las
+   tarjetas restantes se agrupan en un wrapper a ancho completo y se
+   centran, cada una con el mismo ancho que una columna. --gh-cols se
+   ajusta por breakpoint en los media queries del responsive. */
+.gh__grid-last {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.gh__grid-last .repo-card {
+  flex: 0 1 calc((100% - (var(--gh-cols) - 1) * 14px) / var(--gh-cols));
 }
 
 .repo-card {
@@ -3167,6 +3194,7 @@ html.custom-cursor summary {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .gh__grid {
+    --gh-cols: 2;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -3286,7 +3314,11 @@ html.custom-cursor summary {
     left: -33px;
   }
   .gh__grid {
+    --gh-cols: 1;
     grid-template-columns: 1fr;
+  }
+  .gh__grid-last .repo-card {
+    flex-basis: 100%;
   }
   /* El editor de código gana espacio con un tamaño mono algo menor
      (sigue teniendo scroll horizontal interno por si acaso) */
